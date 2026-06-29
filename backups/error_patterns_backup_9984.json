@@ -1,0 +1,17 @@
+[
+    {
+        "type": "no_torch",
+        "detail": "torch/transformers not via Ollama - use requests.post to http://localhost:11434",
+        "count": 8
+    },
+    {
+        "type": "json_structure",
+        "detail": "entire output wrapped in JSON - output raw Python code only",
+        "count": 5
+    },
+    {
+        "type": "python_orphan",
+        "detail": "bare python line in output - do not use Markdown code block syntax",
+        "count": 27
+    }
+]

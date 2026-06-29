@@ -1,0 +1,8 @@
+chroma_db/
+memory.json
+models.json
+__pycache__/
+*.pyc
+.venv/
+*.log
+*.bak

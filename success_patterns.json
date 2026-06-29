@@ -1,0 +1,20 @@
+[
+    {
+        "module": "task_error_report",
+        "section": "imports_and_models",
+        "summary": "libs: json, requests, typing",
+        "count": 1
+    },
+    {
+        "module": "task_error_report",
+        "section": "core_logic",
+        "summary": "9 functions defined",
+        "count": 1
+    },
+    {
+        "module": "task_error_report",
+        "section": "logging_and_integration",
+        "summary": "1 log print statements",
+        "count": 1
+    }
+]
