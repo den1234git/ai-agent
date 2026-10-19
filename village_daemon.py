@@ -1,6 +1,7 @@
 """
 village_daemon.py — Windowsサービスとして常駐するスケジューラー
 
+毎日 03:00 → honeypot_sync.py（ハニーポットログをローカルに同期）
 毎日 09:00 → village_study.py
 毎日 12:00 → board_members_post（掲示板出動 1回目）
 毎日 18:00 → board_members_post（掲示板出動 2回目）
@@ -28,6 +29,7 @@ logging.basicConfig(
 BOARD_MEMBERS_SCRIPT = r"F:\掲示板専用\village_board_members.py"
 
 SCHEDULE = [
+    {"hour":  3, "minute": 0, "script": "honeypot_sync.py",         "key": "hp_sync"},
     {"hour":  9, "minute": 0, "script": "village_study.py",         "key": "study"},
     {"hour": 12, "minute": 0, "script": BOARD_MEMBERS_SCRIPT,       "key": "board_am",  "abs": True},
     {"hour": 18, "minute": 0, "script": BOARD_MEMBERS_SCRIPT,       "key": "board_pm",  "abs": True},
