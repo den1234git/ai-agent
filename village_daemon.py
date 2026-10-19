@@ -26,13 +26,13 @@ logging.basicConfig(
     datefmt="%Y-%m-%d %H:%M:%S",
 )
 
-BOARD_MEMBERS_SCRIPT = r"F:\掲示板専用\village_board_members.py"
+BOARD_MEMBERS_SCRIPT = "village_board_members.py"
 
 SCHEDULE = [
     {"hour":  3, "minute": 0, "script": "honeypot_sync.py",         "key": "hp_sync"},
     {"hour":  9, "minute": 0, "script": "village_study.py",         "key": "study"},
-    {"hour": 12, "minute": 0, "script": BOARD_MEMBERS_SCRIPT,       "key": "board_am",  "abs": True},
-    {"hour": 18, "minute": 0, "script": BOARD_MEMBERS_SCRIPT,       "key": "board_pm",  "abs": True},
+    {"hour": 12, "minute": 0, "script": BOARD_MEMBERS_SCRIPT,       "key": "board_am"},
+    {"hour": 18, "minute": 0, "script": BOARD_MEMBERS_SCRIPT,       "key": "board_pm"},
     {"hour": 21, "minute": 0, "script": "board_news_cycle.py",      "key": "news"},
 ]
 
