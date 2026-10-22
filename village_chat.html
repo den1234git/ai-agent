@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>村メンバー対話</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', sans-serif; background: #1a1a2e; color: #e0e0e0; height: 100vh; display: flex; }
+
+  /* サイドバー */
+  #sidebar {
+    width: 200px; min-width: 200px; background: #16213e;
+    border-right: 1px solid #0f3460; display: flex; flex-direction: column;
+  }
+  #sidebar h2 { padding: 16px; font-size: 14px; color: #a0a8c0; border-bottom: 1px solid #0f3460; }
+  .member-btn {
+    padding: 12px 16px; cursor: pointer; border: none; background: none;
+    color: #c0c8e0; text-align: left; font-size: 14px; transition: background 0.15s;
+    border-left: 3px solid transparent;
+  }
+  .member-btn:hover { background: #0f3460; }
+  .member-btn.active { background: #0f3460; border-left-color: #e94560; color: #fff; }
+  .member-kote { font-weight: bold; }
+  .member-style { font-size: 11px; color: #7080a0; margin-top: 2px; }
+
+  /* チャットエリア */
+  #main { flex: 1; display: flex; flex-direction: column; }
+  #header {
+    padding: 12px 20px; background: #16213e; border-bottom: 1px solid #0f3460;
+    display: flex; align-items: center; gap: 12px;
+  }
+  #header .kote { font-size: 16px; font-weight: bold; color: #e94560; }
+  #header .style-tag { font-size: 12px; color: #7080a0; background: #0f3460; padding: 2px 8px; border-radius: 10px; }
+
+  #messages { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 12px; }
+
+  .msg { max-width: 75%; padding: 10px 14px; border-radius: 12px; line-height: 1.6; font-size: 14px; }
+  .msg.user { align-self: flex-end; background: #0f3460; color: #e0e8ff; border-bottom-right-radius: 4px; }
+  .msg.ai { align-self: flex-start; background: #1e2a4a; color: #e0e0e0; border-bottom-left-radius: 4px; }
+  .msg .sender { font-size: 11px; color: #7080a0; margin-bottom: 4px; }
+  .msg.thinking { opacity: 0.6; font-style: italic; }
+
+  #input-area { padding: 16px 20px; background: #16213e; border-top: 1px solid #0f3460; display: flex; gap: 10px; }
+  #input-area textarea {
+    flex: 1; background: #0f3460; border: 1px solid #2a3a6a; color: #e0e0e0;
+    border-radius: 8px; padding: 10px 14px; font-size: 14px; resize: none;
+    font-family: inherit; outline: none;
+  }
+  #input-area textarea:focus { border-color: #e94560; }
+  #send-btn {
+    padding: 10px 20px; background: #e94560; color: #fff; border: none;
+    border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: bold;
+    transition: background 0.15s; white-space: nowrap;
+  }
+  #send-btn:hover { background: #c73350; }
+  #send-btn:disabled { background: #444; cursor: not-allowed; }
+
+  #no-member { flex: 1; display: flex; align-items: center; justify-content: center; color: #4a5a7a; font-size: 16px; }
+</style>
+</head>
+<body>
+
+<div id="sidebar">
+  <h2>村メンバー</h2>
+  <div id="member-list">読込中…</div>
+</div>
+
+<div id="main">
+  <div id="no-member">← メンバーを選んでください</div>
+  <div id="chat-area" style="display:none; flex:1; flex-direction:column;">
+    <div id="header">
+      <span class="kote" id="cur-kote"></span>
+      <span class="style-tag" id="cur-style"></span>
+    </div>
+    <div id="messages"></div>
+    <div id="input-area">
+      <textarea id="msg-input" rows="2" placeholder="メッセージを入力… (Ctrl+Enter で送信)"></textarea>
+      <button id="send-btn">送信</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const API = 'http://localhost:8000';
+let currentRole = null;
+const histories = {};
+
+async function loadMembers() {
+  try {
+    const res = await fetch(`${API}/village/members`);
+    const members = await res.json();
+    const list = document.getElementById('member-list');
+    list.innerHTML = '';
+    members.forEach(m => {
+      const btn = document.createElement('button');
+      btn.className = 'member-btn';
+      btn.dataset.role = m.role;
+      btn.innerHTML = `<div class="member-kote">${m.kote}</div><div class="member-style">${m.style}</div>`;
+      btn.onclick = () => selectMember(m, btn);
+      list.appendChild(btn);
+    });
+  } catch(e) {
+    document.getElementById('member-list').textContent = 'API接続エラー';
+  }
+}
+
+function selectMember(m, btn) {
+  document.querySelectorAll('.member-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  currentRole = m.role;
+  document.getElementById('cur-kote').textContent = m.kote;
+  document.getElementById('cur-style').textContent = m.style;
+  document.getElementById('no-member').style.display = 'none';
+  document.getElementById('chat-area').style.display = 'flex';
+  if (!histories[m.role]) histories[m.role] = [];
+  renderMessages(m.role);
+  document.getElementById('msg-input').focus();
+}
+
+function renderMessages(role) {
+  const box = document.getElementById('messages');
+  box.innerHTML = '';
+  (histories[role] || []).forEach(msg => addBubble(msg.role, msg.sender, msg.text));
+  box.scrollTop = box.scrollHeight;
+}
+
+function addBubble(side, sender, text) {
+  const box = document.getElementById('messages');
+  const div = document.createElement('div');
+  div.className = `msg ${side}`;
+  div.innerHTML = `<div class="sender">${sender}</div>${escHtml(text)}`;
+  box.appendChild(div);
+  box.scrollTop = box.scrollHeight;
+  return div;
+}
+
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+}
+
+async function sendMessage() {
+  const input = document.getElementById('msg-input');
+  const text = input.value.trim();
+  if (!text || !currentRole) return;
+  input.value = '';
+
+  const btn = document.getElementById('send-btn');
+  btn.disabled = true;
+
+  histories[currentRole].push({ role: 'user', sender: 'あなた', text });
+  addBubble('user', 'あなた', text);
+
+  const thinking = addBubble('ai thinking', '考え中…', '…');
+
+  try {
+    const res = await fetch(`${API}/village/chat/${currentRole}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: text }),
+    });
+    const data = await res.json();
+    thinking.remove();
+    if (data.error) {
+      addBubble('ai', 'エラー', data.error);
+    } else {
+      histories[currentRole].push({ role: 'ai', sender: data.kote, text: data.reply });
+      addBubble('ai', data.kote, data.reply);
+    }
+  } catch(e) {
+    thinking.remove();
+    addBubble('ai', 'エラー', 'API接続に失敗しました: ' + e.message);
+  }
+
+  btn.disabled = false;
+  input.focus();
+}
+
+document.getElementById('send-btn').onclick = sendMessage;
+document.getElementById('msg-input').addEventListener('keydown', e => {
+  if (e.ctrlKey && e.key === 'Enter') sendMessage();
+});
+
+loadMembers();
+</script>
+</body>
+</html>
