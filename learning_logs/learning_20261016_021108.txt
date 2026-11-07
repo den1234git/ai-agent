@@ -1,0 +1,56 @@
+=== AI_001 学習ログ ===
+日時: 2026-10-16 02:11:08
+
+--- 検索クエリ（AIが自分で立てた問い） ---
+arXivクエリ: string
+Wikipediaクエリ: プログラミング基本
+e-Govクエリ: （今回は対象外）
+Qiitaクエリ: （今回は対象外）
+クエリ選定理由: 前回の学習で関連性の低いテーマを学習したため、適切な学習を促す新たなテーマを選び、知識のバランスを保つ
+
+--- 生徒同士の相互評価ログ ---
+・Thermo Field Dynamics of strings with definite boundary conditions: 50点 -  / 直し:リトライしてください
+・Closed strings in Misner space: a toy model for a Big Bounce ?: 50点 -  / 直し:リトライしてください
+・Kosterlitz-Thouless Transition in Bi${}_2$Sr${}_2$CaCu${}_2$O${}_8+δ$ Thin Films: 50点 -  / 直し:リトライしてください
+・プログラミング: 50点 -  / 直し:リトライしてください
+・プログラミング言語: 50点 -  / 直し:リトライしてください
+
+--- arXiv 取得結果 ---
+・Thermo Field Dynamics of strings with definite boundary conditions
+  URL: http://arxiv.org/abs/1508.05815v1
+  要約: In this paper we review the construction of the thermal bosonic string and $D$-brane in the framework of the Thermo Field Dynamics (TFD). We briefly recall the well-known light-cone quantization of the bosonic string in the conformal gauge in flat space-time. Then we give a bird's eye view of the fu
+
+・Closed strings in Misner space: a toy model for a Big Bounce ?
+  URL: http://arxiv.org/abs/hep-th/0501145v2
+  要約: Misner space, also known as the Lorentzian orbifold $R^{1,1}/boost$, is one of the simplest examples of a cosmological singularity in string theory. In this lecture, we review the semi-classical propagation of closed strings in this background, with a particular emphasis on the twisted sectors of th
+
+・Kosterlitz-Thouless Transition in Bi${}_2$Sr${}_2$CaCu${}_2$O${}_8+δ$ Thin Films
+  URL: http://arxiv.org/abs/cond-mat/9405027v2
+  要約: Current-voltage ($I-V$) characteristics and the increase of superconducting transition temperature $T_c$ as a function of the number of half-unit-cell layers $n$ are studied on Bi${}_2$Sr${}_2$CaCu${}_2$O${}_{8+δ}$ thin films grown by molecular beam epitaxy. These observations are interpreted in ter
+
+
+--- Wikipedia 取得結果 ---
+・プログラミング
+  URL: https://ja.wikipedia.org/wiki/%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0
+  抜粋: プログラミング（英語: Computer programming）とは、コンピュータのプログラムを作成することである。
+
+
+
+・プログラミング言語
+  URL: https://ja.wikipedia.org/wiki/%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0%E8%A8%80%E8%AA%9E
+  抜粋: プログラミング言語（プログラミングげんご、英語: programming language）とは、コンピュータに対して命令を行うために設計されている、大抵は形式的に（formalに）定義された構文（シンタックス）と、何らかの意味（セマンティクス）からなる、コンピュータ言語である。以前は、しばしばプログラム言語と表記された（#日本語における名称を参照）。プログラミング言語を使って行う作業のことを「プログラミング」といい、プログラミングをする人（あるいはそれを職業にしている人）のことを「プログラマ」という。
+プログラミング言語が記述されたもののことを総称して「ソースコード」といい、ソースコードをコ
+
+
+--- e-Gov（法令） 取得結果 ---
+（今回のテーマでは対象外のためスキップしました）
+
+--- Qiita 取得結果 ---
+（今回のテーマでは対象外のためスキップしました）
+
+--- エラー・成功件数まとめ ---
+arXiv: 取得 成功 / 件数 3 / DB保存 0件
+Wikipedia: 取得 成功 / 件数 2 / DB保存 0件
+e-Gov: 取得 成功 / 件数 0 / DB保存 0件
+Qiita: 取得 成功 / 件数 0 / DB保存 0件
+失敗したソース: なし

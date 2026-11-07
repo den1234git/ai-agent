@@ -10,6 +10,13 @@ MAX_RETRIES = 3
 RETRY_INTERVAL = 5  # 秒
 
 
+class OllamaUnavailableError(Exception):
+    """Ollama（ローカルLLMサーバー :11434）に接続できない／応答しないときに送出する。
+    router.py 各所の except OllamaUnavailableError で握って、ユーザーに
+    「Ollamaを起動してください」と案内するために使う。"""
+    pass
+
+
 def load_model_config():
     fallback = {
         "models": {
@@ -34,9 +41,7 @@ def load_model_config():
             return fallback
         config.setdefault("default_model", fallback["default_model"])
         config.setdefault("keep_alive", fallback["keep_alive"])
-        # models.jsonにvisionがなければ自動追加
-        if "vision" not in config["models"]:
-            config["models"]["vision"] = fallback["models"]["vision"]
+        # （vision の自動追加は廃止。models.json に無ければ画像は既定モデルに回る）
         return config
     except json.JSONDecodeError:
         print("[WARN] models.json の形式が不正です。デフォルト設定を使用します。")
@@ -243,12 +248,18 @@ def ask_ai(prompt, model=None, image_base64=None):
                 time.sleep(RETRY_INTERVAL)
 
     print(f"[AI] {MAX_RETRIES}回リトライしても失敗しました。最後のエラー: {last_error}")
-    return {
-        "plan": [],
-        "actions": [
-            {
-                "type": "answer",
-                "content": f"Ollamaへの接続に失敗しました（{last_error}）。Ollamaが起動しているか確認してください。"
-            }
-        ]
-    }
+    raise OllamaUnavailableError(
+        f"Ollamaへの接続に失敗しました（{last_error}）。Ollamaが起動しているか確認してください。"
+    )
+
+
+def ask_ai_with_rag(prompt, model=None, knowledge_query=None, image_base64=None):
+    """
+    RAG（shobo_knowledge）を踏まえて回答する版。
+    ※ 以前はここで ChromaDB から knowledge_query に関連する知識を取得して
+       prompt に注入していたが、現在その取得処理が未復元のため、
+       取得をスキップして ask_ai にそのまま委譲する（サーバーは正常に動く）。
+       RAG取得を復元する際は、knowledge_query で検索した本文を
+       prompt の先頭に足してから ask_ai を呼ぶ形に戻す。
+    """
+    return ask_ai(prompt, model=model, image_base64=image_base64)

@@ -1,8 +1,14 @@
 import json
 import os
 
-def build_prompt(user, mem):
+def build_prompt(user, mem, history=None):
     memory_str = json.dumps(mem or {}, ensure_ascii=False)
+    # 会話履歴（任意）。文字列ならそのまま、リスト等ならJSON化して添える。
+    if history:
+        history_str = history if isinstance(history, str) else json.dumps(history, ensure_ascii=False)
+        history_block = f"\n会話履歴:\n{history_str}\n"
+    else:
+        history_block = ""
     return f"""
 SYSTEM:
 あなたはJSON形式のみで応答するAIエージェントです。必ず日本語で考え、日本語で処理してください。
@@ -42,7 +48,7 @@ SYSTEM:
 
 記憶:
 {memory_str}
-
+{history_block}
 ユーザー:
 {user}
 """.strip()
@@ -318,3 +324,32 @@ def build_vision_prompt(user_message: str) -> str:
     if user_message:
         return f"以下の指示に従って画像を分析してください。\n\n{user_message}"
     return "この画像の内容を日本語で詳しく説明してください。"
+
+
+def build_clarification_check_prompt(user: str) -> str:
+    """
+    明確化チェック用プロンプト（router=qwen2.5:3b で判定）。
+    アプリ/モックアップ生成に入る前に、ユーザーの要望が曖昧で
+    確認が必要かどうかを判定する。曖昧なら確認用の質問を1つ返す。
+    router.py の _needs_clarification() から呼ばれ、戻り値は
+    {"needs_clarification": bool, "question": str, "reason": str} のJSON。
+    """
+    return f"""あなたはユーザーの要望を受け取る前さばき係です。
+これからアプリや画面を作る前に、要望が具体的で作り始められるか、
+それとも曖昧で確認が必要かを判定してください。
+
+ユーザーの要望：
+{user}
+
+以下のJSONのみ返してください：
+{{
+  "needs_clarification": true または false,
+  "question": "確認が必要な場合の質問を1つ（不要なら空文字）",
+  "reason": "判定の理由を一言で"
+}}
+
+ルール：
+- 作る対象・目的・主要な項目がはっきりしている → needs_clarification は false
+- 対象が曖昧で、このまま作ると的外れになりそう → needs_clarification を true にし、最も重要な確認を question に1つだけ書く
+- 迷ったら false（生成を止めない）
+"""

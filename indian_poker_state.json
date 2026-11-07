@@ -1,0 +1,766 @@
+{
+  "active": false,
+  "phase": "done",
+  "sub_phase": "question",
+  "total_turn": 24,
+  "current_player_idx": 3,
+  "current_turn_data": {},
+  "players": [
+    {
+      "key": "llama3_2",
+      "name": "llama3.2:3b",
+      "word": "炎",
+      "turn_count": 6,
+      "skip_next_turn": true
+    },
+    {
+      "key": "gemma3",
+      "name": "llamacpp:c30276f7dffec93a536d283e15088990454b8d21cf180a3d6eea4959e4147291",
+      "word": "剣",
+      "turn_count": 6,
+      "skip_next_turn": true
+    },
+    {
+      "key": "swallow",
+      "name": "hf.co/mmnga/Llama-3.1-Swallow-8B-Instruct-v0.5-gguf:latest",
+      "word": "桜",
+      "turn_count": 6,
+      "skip_next_turn": false
+    },
+    {
+      "key": "llama3_1",
+      "name": "llama3.1:8b",
+      "word": "風",
+      "turn_count": 6,
+      "skip_next_turn": false
+    }
+  ],
+  "history": [
+    {
+      "turn": 1,
+      "player_key": "llama3_2",
+      "player_name": "llama3.2:3b",
+      "player_word": "炎",
+      "question": "目に見えますか？",
+      "answerer_key": "gemma3",
+      "answerer_name": "llamacpp:c30276f7dffec93a536d283e15088990454b8d21cf180a3d6eea4959e4147291",
+      "answer": "はい",
+      "reason": "多数決 はい2/いいえ1",
+      "votes": [
+        {
+          "name": "llamacpp:c30276f7dffec93a536d283e15088990454b8d21cf180a3d6eea4959e4147291",
+          "answer": "はい"
+        },
+        {
+          "name": "hf.co/mmnga/Llama-3.1-Swallow-8B-Instruct-v0.5-gguf:latest",
+          "answer": "いいえ"
+        },
+        {
+          "name": "llama3.1:8b",
+          "answer": "はい"
+        }
+      ],
+      "penalized": [
+        "hf.co/mmnga/Llama-3.1-Swallow-8B-Instruct-v0.5-gguf:latest"
+      ],
+      "guessed": true,
+      "guess": "桜",
+      "correct": false
+    },
+    {
+      "turn": 2,
+      "player_key": "gemma3",
+      "player_name": "llamacpp:c30276f7dffec93a536d283e15088990454b8d21cf180a3d6eea4959e4147291",
+      "player_word": "剣",
+      "question": "冷たいですか？",
+      "answerer_key": "swallow",
+      "answerer_name": "hf.co/mmnga/Llama-3.1-Swallow-8B-Instruct-v0.5-gguf:latest",
+      "answer": "いいえ",
+      "reason": "多数決 はい1/いいえ2",
+      "votes": [
+        {
+          "name": "llama3.2:3b",
+          "answer": "いいえ"
+        },
+        {
+          "name": "hf.co/mmnga/Llama-3.1-Swallow-8B-Instruct-v0.5-gguf:latest",
+          "answer": "いいえ"
+        },
+        {
+          "name": "llama3.1:8b",
+          "answer": "はい"
+        }
+      ],
+      "penalized": [
+        "llama3.1:8b"
+      ],
+      "guessed": false,
+      "guess": "",
+      "correct": false
+    },
+    {
+      "turn": 3,
+      "player_key": "llama3_2",
+      "player_name": "llama3.2:3b",
+      "player_word": "炎",
+      "question": "秘密の言葉が目に見えますか？",
+      "answerer_key": "gemma3",
+      "answerer_name": "llamacpp:c30276f7dffec93a536d283e15088990454b8d21cf180a3d6eea4959e4147291",
+      "answer": "はい",
+      "reason": "多数決 はい2/いいえ1",
+      "votes": [
+        {
+          "name": "llamacpp:c30276f7dffec93a536d283e15088990454b8d21cf180a3d6eea4959e4147291",
+          "answer": "はい"
+        },
+        {
+          "name": "hf.co/mmnga/Llama-3.1-Swallow-8B-Instruct-v0.5-gguf:latest",
+          "answer": "いいえ"
+        },
+        {
+          "name": "llama3.1:8b",
+          "answer": "はい"
+        }
+      ],
+      "penalized": [
+        "hf.co/mmnga/Llama-3.1-Swallow-8B-Instruct-v0.5-gguf:latest"
+      ],
+      "guessed": false,
+      "guess": "",
+      "correct": false
+    },
+    {
+      "turn": 4,
+      "player_key": "gemma3",
+      "player_name": "llamacpp:c30276f7dffec93a536d283e15088990454b8d21cf180a3d6eea4959e4147291",
+      "player_word": "剣",
+      "question": "心に関係しますか？",
+      "answerer_key": "swallow",
+      "answerer_name": "hf.co/mmnga/Llama-3.1-Swallow-8B-Instruct-v0.5-gguf:latest",
+      "answer": "はい",
+      "reason": "多数決 はい2/いいえ1",
+      "votes": [
+        {
+          "name": "llama3.2:3b",
+          "answer": "いいえ"
+        },
+        {
+          "name": "hf.co/mmnga/Llama-3.1-Swallow-8B-Instruct-v0.5-gguf:latest",
+          "answer": "はい"
+        },
+        {
+          "name": "llama3.1:8b",
+          "answer": "はい"
+        }
+      ],
+      "penalized": [
+        "llama3.2:3b"
+      ],
+      "guessed": false,
+      "guess": "",
+      "correct": false
+    },
+    {
+      "turn": 5,
+      "player_key": "llama3_1",
+      "player_name": "llama3.1:8b",
+      "player_word": "風",
+      "question": "色がありますか？",
+      "answerer_key": "llama3_2",
+      "answerer_name": "llama3.2:3b",
+      "answer": "いいえ",
+      "reason": "多数決 はい0/いいえ3",
+      "votes": [
+        {
+          "name": "llama3.2:3b",
+          "answer": "いいえ"
+        },
+        {
+          "name": "llamacpp:c30276f7dffec93a536d283e15088990454b8d21cf180a3d6eea4959e4147291",
+          "answer": "いいえ"
+        },
+        {
+          "name": "hf.co/mmnga/Llama-3.1-Swallow-8B-Instruct-v0.5-gguf:latest",
+          "answer": "いいえ"
+        }
+      ],
+      "penalized": [],
+      "guessed": true,
+      "guess": "草",
+      "correct": false
+    },
+    {
+      "turn": 6,
+      "player_key": "gemma3",
+      "player_name": "llamacpp:c30276f7dffec93a536d283e15088990454b8d21cf180a3d6eea4959e4147291",
+      "player_word": "剣",
+      "question": "感情と関係ありますか？",
+      "answerer_key": "swallow",
+      "answerer_name": "hf.co/mmnga/Llama-3.1-Swallow-8B-Instruct-v0.5-gguf:latest",
+      "answer": "はい",
+      "reason": "多数決 はい2/いいえ1",
+      "votes": [
+        {
+          "name": "llama3.2:3b",
+          "answer": "いいえ"
+        },
+        {
+          "name": "hf.co/mmnga/Llama-3.1-Swallow-8B-Instruct-v0.5-gguf:latest",
+          "answer": "はい"
+        },
+        {
+          "name": "llama3.1:8b",
+          "answer": "はい"
+        }
+      ],
+      "penalized": [
+        "llama3.2:3b"
+      ],
+      "guessed": true,
+      "guess": "炎",
+      "correct": false
+    },
+    {
+      "turn": 7,
+      "player_key": "swallow",
+      "player_name": "hf.co/mmnga/Llama-3.1-Swallow-8B-Instruct-v0.5-gguf:latest",
+      "player_word": "桜",
+      "question": "動物ですか？",
+      "answerer_key": "llama3_1",
+      "answerer_name": "llama3.1:8b",
+      "answer": "いいえ",
+      "reason": "多数決 はい0/いいえ3",
+      "votes": [
+        {
+          "name": "llama3.2:3b",
+          "answer": "いいえ"
+        },
+        {
+          "name": "llamacpp:c30276f7dffec93a536d283e15088990454b8d21cf180a3d6eea4959e4147291",
+          "answer": "いいえ"
+        },
+        {
+          "name": "llama3.1:8b",
+          "answer": "いいえ"
+        }
+      ],
+      "penalized": [],
+      "guessed": false,
+      "guess": "",
+      "correct": false
+    },
+    {
+      "turn": 8,
+      "player_key": "llama3_1",
+      "player_name": "llama3.1:8b",
+      "player_word": "風",
+      "question": "自然に由来しますか？",
+      "answerer_key": "llama3_2",
+      "answerer_name": "llama3.2:3b",
+      "answer": "はい",
+      "reason": "多数決 はい3/いいえ0",
+      "votes": [
+        {
+          "name": "llama3.2:3b",
+          "answer": "はい"
+        },
+        {
+          "name": "llamacpp:c30276f7dffec93a536d283e15088990454b8d21cf180a3d6eea4959e4147291",
+          "answer": "はい"
+        },
+        {
+          "name": "hf.co/mmnga/Llama-3.1-Swallow-8B-Instruct-v0.5-gguf:latest",
+          "answer": "はい"
+        }
+      ],
+      "penalized": [],
+      "guessed": true,
+      "guess": "桜",
+      "correct": false
+    },
+    {
+      "turn": 9,
+      "player_key": "gemma3",
+      "player_name": "llamacpp:c30276f7dffec93a536d283e15088990454b8d21cf180a3d6eea4959e4147291",
+      "player_word": "剣",
+      "question": "動きがありますか？",
+      "answerer_key": "swallow",
+      "answerer_name": "hf.co/mmnga/Llama-3.1-Swallow-8B-Instruct-v0.5-gguf:latest",
+      "answer": "はい",
+      "reason": "多数決 はい2/いいえ1",
+      "votes": [
+        {
+          "name": "llama3.2:3b",
+          "answer": "いいえ"
+        },
+        {
+          "name": "hf.co/mmnga/Llama-3.1-Swallow-8B-Instruct-v0.5-gguf:latest",
+          "answer": "はい"
+        },
+        {
+          "name": "llama3.1:8b",
+          "answer": "はい"
+        }
+      ],
+      "penalized": [
+        "llama3.2:3b"
+      ],
+      "guessed": false,
+      "guess": "",
+      "correct": false
+    },
+    {
+      "turn": 10,
+      "player_key": "swallow",
+      "player_name": "hf.co/mmnga/Llama-3.1-Swallow-8B-Instruct-v0.5-gguf:latest",
+      "player_word": "桜",
+      "question": "形あるものですか？",
+      "answerer_key": "llama3_1",
+      "answerer_name": "llama3.1:8b",
+      "answer": "はい",
+      "reason": "多数決 はい2/いいえ1",
+      "votes": [
+        {
+          "name": "llama3.2:3b",
+          "answer": "いいえ"
+        },
+        {
+          "name": "llamacpp:c30276f7dffec93a536d283e15088990454b8d21cf180a3d6eea4959e4147291",
+          "answer": "はい"
+        },
+        {
+          "name": "llama3.1:8b",
+          "answer": "はい"
+        }
+      ],
+      "penalized": [
+        "llama3.2:3b"
+      ],
+      "guessed": true,
+      "guess": "水",
+      "correct": false
+    },
+    {
+      "turn": 11,
+      "player_key": "llama3_1",
+      "player_name": "llama3.1:8b",
+      "player_word": "風",
+      "question": "形や大きさが固定されていますか",
+      "answerer_key": "llama3_2",
+      "answerer_name": "llama3.2:3b",
+      "answer": "いいえ",
+      "reason": "多数決 はい0/いいえ3",
+      "votes": [
+        {
+          "name": "llama3.2:3b",
+          "answer": "いいえ"
+        },
+        {
+          "name": "llamacpp:c30276f7dffec93a536d283e15088990454b8d21cf180a3d6eea4959e4147291",
+          "answer": "いいえ"
+        },
+        {
+          "name": "hf.co/mmnga/Llama-3.1-Swallow-8B-Instruct-v0.5-gguf:latest",
+          "answer": "いいえ"
+        }
+      ],
+      "penalized": [],
+      "guessed": true,
+      "guess": "雲",
+      "correct": false
+    },
+    {
+      "turn": 12,
+      "player_key": "gemma3",
+      "player_name": "llamacpp:c30276f7dffec93a536d283e15088990454b8d21cf180a3d6eea4959e4147291",
+      "player_word": "剣",
+      "question": "色がありますか？",
+      "answerer_key": "swallow",
+      "answerer_name": "hf.co/mmnga/Llama-3.1-Swallow-8B-Instruct-v0.5-gguf:latest",
+      "answer": "いいえ",
+      "reason": "多数決 はい1/いいえ2",
+      "votes": [
+        {
+          "name": "llama3.2:3b",
+          "answer": "いいえ"
+        },
+        {
+          "name": "hf.co/mmnga/Llama-3.1-Swallow-8B-Instruct-v0.5-gguf:latest",
+          "answer": "いいえ"
+        },
+        {
+          "name": "llama3.1:8b",
+          "answer": "はい"
+        }
+      ],
+      "penalized": [
+        "llama3.1:8b"
+      ],
+      "guessed": false,
+      "guess": "",
+      "correct": false
+    },
+    {
+      "turn": 13,
+      "player_key": "swallow",
+      "player_name": "hf.co/mmnga/Llama-3.1-Swallow-8B-Instruct-v0.5-gguf:latest",
+      "player_word": "桜",
+      "question": "人工物ですか？",
+      "answerer_key": "llama3_1",
+      "answerer_name": "llama3.1:8b",
+      "answer": "いいえ",
+      "reason": "多数決 はい0/いいえ3",
+      "votes": [
+        {
+          "name": "llama3.2:3b",
+          "answer": "いいえ"
+        },
+        {
+          "name": "llamacpp:c30276f7dffec93a536d283e15088990454b8d21cf180a3d6eea4959e4147291",
+          "answer": "いいえ"
+        },
+        {
+          "name": "llama3.1:8b",
+          "answer": "いいえ"
+        }
+      ],
+      "penalized": [],
+      "guessed": true,
+      "guess": "木",
+      "correct": false
+    },
+    {
+      "turn": 14,
+      "player_key": "llama3_2",
+      "player_name": "llama3.2:3b",
+      "player_word": "炎",
+      "question": "目に見えますか？",
+      "answerer_key": "gemma3",
+      "answerer_name": "llamacpp:c30276f7dffec93a536d283e15088990454b8d21cf180a3d6eea4959e4147291",
+      "answer": "はい",
+      "reason": "多数決 はい3/いいえ0",
+      "votes": [
+        {
+          "name": "llamacpp:c30276f7dffec93a536d283e15088990454b8d21cf180a3d6eea4959e4147291",
+          "answer": "はい"
+        },
+        {
+          "name": "hf.co/mmnga/Llama-3.1-Swallow-8B-Instruct-v0.5-gguf:latest",
+          "answer": "はい"
+        },
+        {
+          "name": "llama3.1:8b",
+          "answer": "はい"
+        }
+      ],
+      "penalized": [],
+      "guessed": true,
+      "guess": "剣",
+      "correct": false
+    },
+    {
+      "turn": 15,
+      "player_key": "gemma3",
+      "player_name": "llamacpp:c30276f7dffec93a536d283e15088990454b8d21cf180a3d6eea4959e4147291",
+      "player_word": "剣",
+      "question": "冷たくて、ある飲み物ですか？",
+      "answerer_key": "swallow",
+      "answerer_name": "hf.co/mmnga/Llama-3.1-Swallow-8B-Instruct-v0.5-gguf:latest",
+      "answer": "いいえ",
+      "reason": "多数決 はい0/いいえ3",
+      "votes": [
+        {
+          "name": "llama3.2:3b",
+          "answer": "いいえ"
+        },
+        {
+          "name": "hf.co/mmnga/Llama-3.1-Swallow-8B-Instruct-v0.5-gguf:latest",
+          "answer": "いいえ"
+        },
+        {
+          "name": "llama3.1:8b",
+          "answer": "いいえ"
+        }
+      ],
+      "penalized": [],
+      "guessed": false,
+      "guess": "",
+      "correct": false
+    },
+    {
+      "turn": 16,
+      "player_key": "swallow",
+      "player_name": "hf.co/mmnga/Llama-3.1-Swallow-8B-Instruct-v0.5-gguf:latest",
+      "player_word": "桜",
+      "question": "触覚で感じられますか？",
+      "answerer_key": "llama3_1",
+      "answerer_name": "llama3.1:8b",
+      "answer": "はい",
+      "reason": "多数決 はい3/いいえ0",
+      "votes": [
+        {
+          "name": "llama3.2:3b",
+          "answer": "はい"
+        },
+        {
+          "name": "llamacpp:c30276f7dffec93a536d283e15088990454b8d21cf180a3d6eea4959e4147291",
+          "answer": "はい"
+        },
+        {
+          "name": "llama3.1:8b",
+          "answer": "はい"
+        }
+      ],
+      "penalized": [],
+      "guessed": false,
+      "guess": "",
+      "correct": false
+    },
+    {
+      "turn": 17,
+      "player_key": "llama3_1",
+      "player_name": "llama3.1:8b",
+      "player_word": "風",
+      "question": "自然の景色ですか？",
+      "answerer_key": "llama3_2",
+      "answerer_name": "llama3.2:3b",
+      "answer": "いいえ",
+      "reason": "多数決 はい1/いいえ2",
+      "votes": [
+        {
+          "name": "llama3.2:3b",
+          "answer": "いいえ"
+        },
+        {
+          "name": "llamacpp:c30276f7dffec93a536d283e15088990454b8d21cf180a3d6eea4959e4147291",
+          "answer": "はい"
+        },
+        {
+          "name": "hf.co/mmnga/Llama-3.1-Swallow-8B-Instruct-v0.5-gguf:latest",
+          "answer": "いいえ"
+        }
+      ],
+      "penalized": [
+        "llamacpp:c30276f7dffec93a536d283e15088990454b8d21cf180a3d6eea4959e4147291"
+      ],
+      "guessed": true,
+      "guess": "桜",
+      "correct": false
+    },
+    {
+      "turn": 18,
+      "player_key": "llama3_2",
+      "player_name": "llama3.2:3b",
+      "player_word": "炎",
+      "question": "目に見えますか？",
+      "answerer_key": "gemma3",
+      "answerer_name": "llamacpp:c30276f7dffec93a536d283e15088990454b8d21cf180a3d6eea4959e4147291",
+      "answer": "はい",
+      "reason": "多数決 はい2/いいえ1",
+      "votes": [
+        {
+          "name": "llamacpp:c30276f7dffec93a536d283e15088990454b8d21cf180a3d6eea4959e4147291",
+          "answer": "はい"
+        },
+        {
+          "name": "hf.co/mmnga/Llama-3.1-Swallow-8B-Instruct-v0.5-gguf:latest",
+          "answer": "いいえ"
+        },
+        {
+          "name": "llama3.1:8b",
+          "answer": "はい"
+        }
+      ],
+      "penalized": [
+        "hf.co/mmnga/Llama-3.1-Swallow-8B-Instruct-v0.5-gguf:latest"
+      ],
+      "guessed": false,
+      "guess": "",
+      "correct": false
+    },
+    {
+      "turn": 19,
+      "player_key": "llama3_1",
+      "player_name": "llama3.1:8b",
+      "player_word": "風",
+      "question": "色がありますか？",
+      "answerer_key": "llama3_2",
+      "answerer_name": "llama3.2:3b",
+      "answer": "いいえ",
+      "reason": "多数決 はい0/いいえ3",
+      "votes": [
+        {
+          "name": "llama3.2:3b",
+          "answer": "いいえ"
+        },
+        {
+          "name": "llamacpp:c30276f7dffec93a536d283e15088990454b8d21cf180a3d6eea4959e4147291",
+          "answer": "いいえ"
+        },
+        {
+          "name": "hf.co/mmnga/Llama-3.1-Swallow-8B-Instruct-v0.5-gguf:latest",
+          "answer": "いいえ"
+        }
+      ],
+      "penalized": [],
+      "guessed": true,
+      "guess": "梅",
+      "correct": false
+    },
+    {
+      "turn": 20,
+      "player_key": "llama3_2",
+      "player_name": "llama3.2:3b",
+      "player_word": "炎",
+      "question": "目に見えますか？",
+      "answerer_key": "gemma3",
+      "answerer_name": "llamacpp:c30276f7dffec93a536d283e15088990454b8d21cf180a3d6eea4959e4147291",
+      "answer": "はい",
+      "reason": "多数決 はい2/いいえ1",
+      "votes": [
+        {
+          "name": "llamacpp:c30276f7dffec93a536d283e15088990454b8d21cf180a3d6eea4959e4147291",
+          "answer": "はい"
+        },
+        {
+          "name": "hf.co/mmnga/Llama-3.1-Swallow-8B-Instruct-v0.5-gguf:latest",
+          "answer": "いいえ"
+        },
+        {
+          "name": "llama3.1:8b",
+          "answer": "はい"
+        }
+      ],
+      "penalized": [
+        "hf.co/mmnga/Llama-3.1-Swallow-8B-Instruct-v0.5-gguf:latest"
+      ],
+      "guessed": true,
+      "guess": "剣",
+      "correct": false
+    },
+    {
+      "turn": 21,
+      "player_key": "llama3_1",
+      "player_name": "llama3.1:8b",
+      "player_word": "風",
+      "question": "食べ物ですか？",
+      "answerer_key": "llama3_2",
+      "answerer_name": "llama3.2:3b",
+      "answer": "いいえ",
+      "reason": "多数決 はい0/いいえ3",
+      "votes": [
+        {
+          "name": "llama3.2:3b",
+          "answer": "いいえ"
+        },
+        {
+          "name": "llamacpp:c30276f7dffec93a536d283e15088990454b8d21cf180a3d6eea4959e4147291",
+          "answer": "いいえ"
+        },
+        {
+          "name": "hf.co/mmnga/Llama-3.1-Swallow-8B-Instruct-v0.5-gguf:latest",
+          "answer": "いいえ"
+        }
+      ],
+      "penalized": [],
+      "guessed": true,
+      "guess": "桜",
+      "correct": false
+    },
+    {
+      "turn": 22,
+      "player_key": "llama3_2",
+      "player_name": "llama3.2:3b",
+      "player_word": "炎",
+      "question": "目に見えますか？",
+      "answerer_key": "gemma3",
+      "answerer_name": "llamacpp:c30276f7dffec93a536d283e15088990454b8d21cf180a3d6eea4959e4147291",
+      "answer": "はい",
+      "reason": "多数決 はい3/いいえ0",
+      "votes": [
+        {
+          "name": "llamacpp:c30276f7dffec93a536d283e15088990454b8d21cf180a3d6eea4959e4147291",
+          "answer": "はい"
+        },
+        {
+          "name": "hf.co/mmnga/Llama-3.1-Swallow-8B-Instruct-v0.5-gguf:latest",
+          "answer": "はい"
+        },
+        {
+          "name": "llama3.1:8b",
+          "answer": "はい"
+        }
+      ],
+      "penalized": [],
+      "guessed": true,
+      "guess": "剣",
+      "correct": false
+    },
+    {
+      "turn": 23,
+      "player_key": "swallow",
+      "player_name": "hf.co/mmnga/Llama-3.1-Swallow-8B-Instruct-v0.5-gguf:latest",
+      "player_word": "桜",
+      "question": "抽象的な概念ですか？",
+      "answerer_key": "llama3_1",
+      "answerer_name": "llama3.1:8b",
+      "answer": "いいえ",
+      "reason": "多数決 はい1/いいえ2",
+      "votes": [
+        {
+          "name": "llama3.2:3b",
+          "answer": "いいえ"
+        },
+        {
+          "name": "llamacpp:c30276f7dffec93a536d283e15088990454b8d21cf180a3d6eea4959e4147291",
+          "answer": "はい"
+        },
+        {
+          "name": "llama3.1:8b",
+          "answer": "いいえ"
+        }
+      ],
+      "penalized": [
+        "llamacpp:c30276f7dffec93a536d283e15088990454b8d21cf180a3d6eea4959e4147291"
+      ],
+      "guessed": false,
+      "guess": "",
+      "correct": false
+    },
+    {
+      "turn": 24,
+      "player_key": "swallow",
+      "player_name": "hf.co/mmnga/Llama-3.1-Swallow-8B-Instruct-v0.5-gguf:latest",
+      "player_word": "桜",
+      "question": "抽象的な概念ですか？",
+      "answerer_key": "llama3_1",
+      "answerer_name": "llama3.1:8b",
+      "answer": "はい",
+      "reason": "多数決 はい2/いいえ1",
+      "votes": [
+        {
+          "name": "llama3.2:3b",
+          "answer": "いいえ"
+        },
+        {
+          "name": "llamacpp:c30276f7dffec93a536d283e15088990454b8d21cf180a3d6eea4959e4147291",
+          "answer": "はい"
+        },
+        {
+          "name": "llama3.1:8b",
+          "answer": "はい"
+        }
+      ],
+      "penalized": [
+        "llama3.2:3b"
+      ],
+      "guessed": true,
+      "guess": "花",
+      "correct": false
+    }
+  ],
+  "result": {
+    "type": "draw",
+    "total_turns": 24
+  }
+}

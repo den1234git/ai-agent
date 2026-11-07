@@ -1,0 +1,356 @@
+{
+  "version": 1,
+  "curriculum": {
+    "router": {
+      "persona": "進行役",
+      "model_size": "3B",
+      "topics": [
+        {
+          "id": "router_t1",
+          "title": "ファシリテーション技法",
+          "query": "facilitation consensus building decision process",
+          "learned": true,
+          "learned_at": "2026-10-16"
+        },
+        {
+          "id": "router_t2",
+          "title": "論理構造の可視化（トゥールミンモデル）",
+          "query": "Toulmin argument model logic structure",
+          "learned": true,
+          "learned_at": "2026-10-16"
+        },
+        {
+          "id": "router_t3",
+          "title": "認知バイアスが議論に与える影響",
+          "query": "cognitive bias group decision making discussion",
+          "learned": true,
+          "learned_at": "2026-10-16"
+        }
+      ]
+    },
+    "llama3_2": {
+      "persona": "推進派",
+      "model_size": "3B",
+      "topics": [
+        {
+          "id": "llama3_2_t1",
+          "title": "イノベーション普及理論（Rogers）",
+          "query": "Rogers diffusion of innovation technology adoption",
+          "learned": true,
+          "learned_at": "2026-10-16"
+        },
+        {
+          "id": "llama3_2_t2",
+          "title": "アジャイル開発の導入効果",
+          "query": "agile development adoption benefits case study",
+          "learned": true,
+          "learned_at": "2026-10-16"
+        },
+        {
+          "id": "llama3_2_t3",
+          "title": "技術加速とムーアの法則の現在",
+          "query": "Moore's law technology acceleration current status",
+          "learned": true,
+          "learned_at": "2026-10-16"
+        }
+      ]
+    },
+    "granite": {
+      "persona": "反対派",
+      "model_size": "8B（コード特化）",
+      "topics": [
+        {
+          "id": "granite_t1",
+          "title": "リスク管理フレームワーク（FMEA・FTA）",
+          "query": "FMEA FTA failure mode risk analysis",
+          "learned": true,
+          "learned_at": "2026-10-16"
+        },
+        {
+          "id": "granite_t2",
+          "title": "技術的負債の種類と測定",
+          "query": "technical debt classification measurement software",
+          "learned": true,
+          "learned_at": "2026-10-16"
+        },
+        {
+          "id": "granite_t3",
+          "title": "セキュリティ脆弱性分類（CWE/CVE）",
+          "query": "CWE CVE security vulnerability classification",
+          "learned": true,
+          "learned_at": "2026-10-16"
+        }
+      ]
+    },
+    "swallow": {
+      "persona": "実装担当",
+      "model_size": "8B（日本語強）",
+      "topics": [
+        {
+          "id": "swallow_t1",
+          "title": "ソフトウェア設計パターン（GoF）",
+          "query": "Gang of Four design patterns software architecture",
+          "learned": true,
+          "learned_at": "2026-10-16"
+        },
+        {
+          "id": "swallow_t2",
+          "title": "CI/CDパイプラインの構成と実装",
+          "query": "CI CD pipeline continuous integration deployment",
+          "learned": true,
+          "learned_at": "2026-10-16"
+        },
+        {
+          "id": "swallow_t3",
+          "title": "コンテナとオーケストレーション基礎",
+          "query": "Docker container orchestration Kubernetes basics",
+          "learned": true,
+          "learned_at": "2026-10-16"
+        }
+      ]
+    },
+    "lfm_jp": {
+      "persona": "まとめ役",
+      "model_size": "3B",
+      "topics": [
+        {
+          "id": "lfm_jp_t1",
+          "title": "構造化コミュニケーション（PREP法・ピラミッド原則）",
+          "query": "structured communication PREP pyramid principle",
+          "learned": true,
+          "learned_at": "2026-10-16"
+        },
+        {
+          "id": "lfm_jp_t2",
+          "title": "情報整理フレームワーク（MECE）",
+          "query": "MECE mutually exclusive collectively exhaustive information structure",
+          "learned": true,
+          "learned_at": "2026-10-16"
+        },
+        {
+          "id": "lfm_jp_t3",
+          "title": "意思決定モデルと限定合理性",
+          "query": "bounded rationality decision making model Herbert Simon",
+          "learned": true,
+          "learned_at": "2026-10-16"
+        }
+      ]
+    },
+    "llama3_1": {
+      "persona": "分析担当",
+      "model_size": "8B",
+      "topics": [
+        {
+          "id": "llama3_1_t1",
+          "title": "統計的推論（仮説検定・p値）",
+          "query": "hypothesis testing p-value statistical inference",
+          "learned": true,
+          "learned_at": "2026-10-16"
+        },
+        {
+          "id": "llama3_1_t2",
+          "title": "データ分析手法（回帰・クラスタリング）",
+          "query": "regression analysis clustering data analysis methods",
+          "learned": true,
+          "learned_at": "2026-10-16"
+        },
+        {
+          "id": "llama3_1_t3",
+          "title": "因果推論の概念（相関と因果）",
+          "query": "causal inference correlation causation counterfactual",
+          "learned": true,
+          "learned_at": "2026-10-16"
+        }
+      ]
+    },
+    "qwen3": {
+      "persona": "哲学担当",
+      "model_size": "14B（最高性能）",
+      "topics": [
+        {
+          "id": "qwen3_t1",
+          "title": "認識論の主要理論（経験論・合理論・批判哲学）",
+          "query": "epistemology empiricism rationalism Kant critical philosophy",
+          "learned": true,
+          "learned_at": "2026-10-16"
+        },
+        {
+          "id": "qwen3_t2",
+          "title": "倫理学三大理論（功利主義・義務論・徳倫理）",
+          "query": "utilitarianism deontology virtue ethics comparison",
+          "learned": true,
+          "learned_at": "2026-10-16"
+        },
+        {
+          "id": "qwen3_t3",
+          "title": "AI倫理とアラインメント問題の哲学的考察",
+          "query": "AI ethics alignment problem philosophy value alignment",
+          "learned": true,
+          "learned_at": "2026-10-16"
+        }
+      ]
+    },
+    "qwen_coder_14b": {
+      "persona": "技術担当",
+      "model_size": "14B（コード特化）",
+      "topics": [
+        {
+          "id": "qwen_coder_14b_t1",
+          "title": "LLMアーキテクチャ（Transformerの数学的基礎）",
+          "query": "transformer architecture attention mechanism mathematics LLM",
+          "learned": true,
+          "learned_at": "2026-10-16"
+        },
+        {
+          "id": "qwen_coder_14b_t2",
+          "title": "RAGシステムの設計とベクトル検索",
+          "query": "RAG retrieval augmented generation vector search design",
+          "learned": true,
+          "learned_at": "2026-10-16"
+        },
+        {
+          "id": "qwen_coder_14b_t3",
+          "title": "分散システムの一貫性（CAP定理・Raft）",
+          "query": "CAP theorem Raft consensus distributed systems consistency",
+          "learned": true,
+          "learned_at": "2026-10-16"
+        }
+      ]
+    },
+    "sougoshitsumon": {
+      "persona": "質問担当",
+      "model_size": "カスタム",
+      "topics": [
+        {
+          "id": "sougoshitsumon_t1",
+          "title": "ソクラテス問答法と批判的思考",
+          "query": "Socratic method critical thinking questioning techniques",
+          "learned": true,
+          "learned_at": "2026-10-16"
+        },
+        {
+          "id": "sougoshitsumon_t2",
+          "title": "仮説思考のプロセス（設定・検証・更新）",
+          "query": "hypothesis driven thinking process validation update",
+          "learned": true,
+          "learned_at": "2026-10-16"
+        },
+        {
+          "id": "sougoshitsumon_t3",
+          "title": "質問設計論（問いの質が答えの質を決める）",
+          "query": "question design theory inquiry based learning",
+          "learned": true,
+          "learned_at": "2026-10-16"
+        }
+      ]
+    },
+    "gemma3": {
+      "persona": "事例担当",
+      "model_size": "中規模",
+      "topics": [
+        {
+          "id": "gemma3_t1",
+          "title": "プロダクト失敗事例のパターン分析",
+          "query": "product failure patterns analysis case study technology",
+          "learned": true,
+          "learned_at": "2026-10-16"
+        },
+        {
+          "id": "gemma3_t2",
+          "title": "技術選定の成功・失敗事例",
+          "query": "technology selection case study NoSQL microservices success failure",
+          "learned": true,
+          "learned_at": "2026-10-16"
+        },
+        {
+          "id": "gemma3_t3",
+          "title": "歴史的意思決定の教訓（チャレンジャー号等）",
+          "query": "Challenger disaster decision making lessons history engineering failure",
+          "learned": true,
+          "learned_at": "2026-10-16"
+        }
+      ]
+    },
+    "lfm_8b": {
+      "persona": "反論担当",
+      "model_size": "8B",
+      "topics": [
+        {
+          "id": "lfm_8b_t1",
+          "title": "論理的誤謬の種類（ストローマン・循環論法等）",
+          "query": "logical fallacies straw man circular reasoning ad hominem",
+          "learned": true,
+          "learned_at": "2026-10-16"
+        },
+        {
+          "id": "lfm_8b_t2",
+          "title": "反証可能性と科学哲学（ポパー）",
+          "query": "falsifiability Popper scientific philosophy Kuhn Lakatos",
+          "learned": true,
+          "learned_at": "2026-10-16"
+        },
+        {
+          "id": "lfm_8b_t3",
+          "title": "弁証法的議論の構造（テーゼ・アンチテーゼ）",
+          "query": "dialectical argument thesis antithesis synthesis Hegel",
+          "learned": true,
+          "learned_at": "2026-10-16"
+        }
+      ]
+    },
+    "qwen_coder_7b": {
+      "persona": "実装担当B",
+      "model_size": "7B（コード特化）",
+      "topics": [
+        {
+          "id": "qwen_coder_7b_t1",
+          "title": "APIデザイン原則（RESTful・OpenAPI）",
+          "query": "RESTful API design principles OpenAPI specification",
+          "learned": true,
+          "learned_at": "2026-10-16"
+        },
+        {
+          "id": "qwen_coder_7b_t2",
+          "title": "データベース最適化（インデックス・クエリ計画）",
+          "query": "database optimization index design query planning",
+          "learned": true,
+          "learned_at": "2026-10-16"
+        },
+        {
+          "id": "qwen_coder_7b_t3",
+          "title": "テスト戦略（TDD・BDD・テストピラミッド）",
+          "query": "TDD BDD test driven development test pyramid strategy",
+          "learned": true,
+          "learned_at": "2026-10-16"
+        }
+      ]
+    },
+    "lfm_1b": {
+      "persona": "直感担当",
+      "model_size": "1.2B（最小）",
+      "topics": [
+        {
+          "id": "lfm_1b_t1",
+          "title": "システム1/システム2思考（二重過程理論）",
+          "query": "system 1 system 2 dual process theory thinking fast slow",
+          "learned": true,
+          "learned_at": "2026-10-16"
+        },
+        {
+          "id": "lfm_1b_t2",
+          "title": "直感とヒューリスティクスの科学",
+          "query": "intuition heuristics cognitive science decision making",
+          "learned": true,
+          "learned_at": "2026-10-16"
+        },
+        {
+          "id": "lfm_1b_t3",
+          "title": "シンプルな意思決定ルール（サティスファイシング）",
+          "query": "satisficing simple decision rules heuristics Herbert Simon",
+          "learned": true,
+          "learned_at": "2026-10-16"
+        }
+      ]
+    }
+  }
+}

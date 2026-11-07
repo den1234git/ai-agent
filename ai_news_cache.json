@@ -1,0 +1,41 @@
+{
+  "fetched_at": "2026-11-07T21:00:22.915485",
+  "items": [
+    {
+      "source": "Google News (ThinkIT)",
+      "title": "AAAI-26より、LLMに「忘れさせる」機能を研究しているセッションを紹介 - ThinkIT",
+      "url": "https://news.google.com/rss/articles/CBMiS0FVX3lxTE9Jak5Cb2FUdUpxNENVN1BGZDdENWpFU0JRVzIyTVNIeGRQT0tqcVJqaXZldl9VeC1iNTUxZ3p6M0NqM3FiR1NIQTNMVQ?oc=5",
+      "summary": ""
+    },
+    {
+      "source": "Google News (日経ビジネス電子版)",
+      "title": "「LLMは5年以内に時代遅れ」 主流モデル打倒の画像AI研究者が逆襲 - 日経ビジネス電子版",
+      "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE9lWU1WWjFBWlUtRzJLUlRkSF9HaEt1WVp4NUVZaTdZSUJjbVBiY1JOQVV3WU5QdVhiSW5xY3Jrc3ZPNDhMUWFYU2p0T19pdndXSjlEV2ZlNTFIMDgyNndJeDdqR3NIb2M?oc=5",
+      "summary": ""
+    },
+    {
+      "source": "Google News (デジタル庁)",
+      "title": "ガバメントAI「源内」 - デジタル庁",
+      "url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE5IR184RU9sdjZzMktVTVMyaFhxTUN6cEw2Mm43MGlHaUZRQzFxU3hHa0E0TktCUG81cVhrdDFyQW1WSl8zS3lLRGh1YVZ4alNmX2c?oc=5",
+      "summary": ""
+    },
+    {
+      "source": "arXiv (cs.LG)",
+      "title": "User Embeddings are Superpositions of Interpretable Behavioral Modes",
+      "url": "http://arxiv.org/abs/2611.08487v1",
+      "summary": "User embeddings are central components of modern recommendation, personalization, and behavioral modeling systems. Though these embeddings can compact"
+    },
+    {
+      "source": "arXiv (cs.LG)",
+      "title": "Scientist World: Grow a Research World for AI-Scientists",
+      "url": "http://arxiv.org/abs/2611.08478v1",
+      "summary": "AI-Scientists arrived, but a world for them to grow in did not. Human scientists take theirs for granted $-$ centuries of open problems and shared ide"
+    },
+    {
+      "source": "arXiv (cs.LG)",
+      "title": "XStack: A Benchmark for ML Repo Migration",
+      "url": "http://arxiv.org/abs/2611.08472v1",
+      "summary": "ML code should run where researchers choose, not where it was first written. Today, machine learning code mainly lives in two ecosystems, PyTorch on N"
+    }
+  ]
+}

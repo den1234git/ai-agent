@@ -1,0 +1,48 @@
+=== AI_001 学習ログ ===
+日時: 2026-07-25 19:02:25
+カテゴリ（拡張学習）: 医学
+
+--- 検索クエリ（AIが自分で立てた問い） ---
+arXivクエリ: resuscitation burns medical first aid
+Wikipediaクエリ: 救急医療 熱傷治療
+e-Govクエリ: （今回は対象外）
+Qiitaクエリ: （今回は対象外）
+クエリ選定理由: 直前の学習サイクルでのarXivクエリとは異なるテーマで更新
+
+--- arXiv 取得結果 ---
+・Mathematical Model of Volume Kinetics and Renal Function after Burn Injury and Resuscitation
+  URL: http://arxiv.org/abs/2110.11933v1
+  要約: This paper presents a mathematical model of blood volume kinetics and renal function in response to burn injury and resuscitation, which is applicable to the development and non-clinical testing of burn resuscitation protocols and algorithms. Prior mathematical models of burn injury and resuscitatio
+
+・Prompt-enhanced Hierarchical Transformer Elevating Cardiopulmonary Resuscitation Instruction via Temporal Action Segmentation
+  URL: http://arxiv.org/abs/2308.16552v1
+  要約: The vast majority of people who suffer unexpected cardiac arrest are performed cardiopulmonary resuscitation (CPR) by passersby in a desperate attempt to restore life, but endeavors turn out to be fruitless on account of disqualification. Fortunately, many pieces of research manifest that discipline
+
+・Mathematical Modeling, In-Human Evaluation and Analysis of Volume Kinetics and Kidney Function after Burn Injury and Resuscitation
+  URL: http://arxiv.org/abs/2110.13909v1
+  要約: Existing burn resuscitation protocols exhibit large variability in treatment efficacy. Hence, they must be further optimized based on comprehensive knowledge of burn pathophysiology. A physics-based mathematical model that can replicate physiological responses in diverse burn patients can serve as a
+
+
+--- Wikipedia 取得結果 ---
+・救命救急センター
+  URL: https://ja.wikipedia.org/wiki/%E6%95%91%E5%91%BD%E6%95%91%E6%80%A5%E3%82%BB%E3%83%B3%E3%82%BF%E3%83%BC
+  抜粋: 救命救急センター（きゅうめいきゅうきゅうセンター、英文名称：Emergency and critical care center）とは、心筋梗塞や脳出血、多発外傷などの重篤な救急患者へ高度な医療の提供を行う三次救急医療機関である。
+当初は人口100万人あたり一か所を目標に設置され、現在では人口42万人あたり一か所設置されている。2025年4月1日現在、全国312か所。
+
+・熱傷
+  URL: https://ja.wikipedia.org/wiki/%E7%86%B1%E5%82%B7
+  抜粋: 熱傷（ねっしょう）とは、火や高温の液体などの熱、放射線、化学物質、または電気の接触によって生じる損傷を言う。通称は火傷（やけど）である。より低い温度で長時間晒されることによる低温やけどもある。化学物質・放射線などが原因で生じる組織の損傷は化学損傷という。
+
+
+--- e-Gov（法令） 取得結果 ---
+（今回のテーマでは対象外のためスキップしました）
+
+--- Qiita 取得結果 ---
+（今回のテーマでは対象外のためスキップしました）
+
+--- エラー・成功件数まとめ ---
+arXiv: 取得 成功 / 件数 3 / DB保存 3件
+Wikipedia: 取得 成功 / 件数 2 / DB保存 2件
+e-Gov: 取得 成功 / 件数 0 / DB保存 0件
+Qiita: 取得 成功 / 件数 0 / DB保存 0件
+失敗したソース: なし

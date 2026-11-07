@@ -1,0 +1,50 @@
+=== AI_001 学習ログ ===
+日時: 2026-07-25 18:23:14
+カテゴリ（拡張学習）: 建材
+
+--- 検索クエリ（AIが自分で立てた問い） ---
+arXivクエリ: building materials fire resistance
+Wikipediaクエリ: 消防法 建築基準法
+e-Govクエリ: （今回は対象外）
+Qiitaクエリ: （今回は対象外）
+クエリ選定理由: 新たなテーマにシフトし、建築材料と防火に関する学習を続ける
+
+--- arXiv 取得結果 ---
+・Data Assimilation of Satellite Fire Detection in Coupled Atmosphere-Fire Simulation by WRF-SFIRE
+  URL: http://arxiv.org/abs/1410.6948v1
+  要約: Currently available satellite active fire detection products from the VIIRS and MODIS instruments on polar-orbiting satellites produce detection squares in arbitrary locations. There is no global fire/no fire map, no detection under cloud cover, false negatives are common, and the detection squares 
+
+・Air pollution forecasting by coupled atmosphere-fire model WRF and SFIRE with WRF-Chem
+  URL: http://arxiv.org/abs/1304.7703v1
+  要約: Atmospheric pollution regulations have emerged as a dominant obstacle to prescribed burns. Thus, forecasting the pollution caused by wildland fires has acquired high importance. WRF and SFIRE model wildland fire spread in a two-way interaction with the atmosphere. The surface heat flux from the fire
+
+・A review of wildland fire spread modelling, 1990-present 3: Mathematical analogues and simulation models
+  URL: http://arxiv.org/abs/0706.4130v1
+  要約: In recent years, advances in computational power and spatial data analysis (GIS, remote sensing, etc) have led to an increase in attempts to model the spread and behvaiour of wildland fires across the landscape. This series of review papers endeavours to critically and comprehensively review all typ
+
+
+--- Wikipedia 取得結果 ---
+・建築
+  URL: https://ja.wikipedia.org/wiki/%E5%BB%BA%E7%AF%89
+  抜粋: 建築（けんちく、英語: architecture）とは、人間が活動するための空間を内部に持った構造物を、計画、設計、施工そして使用するに至るまでの行為の過程全体、あるいは一部のこと。
+
+
+
+・建築基準法
+  URL: https://ja.wikipedia.org/wiki/%E5%BB%BA%E7%AF%89%E5%9F%BA%E6%BA%96%E6%B3%95
+  抜粋: 建築基準法（けんちくきじゅんほう、昭和25年5月24日法律第201号）は、国民の生命・健康・財産の保護のため、建築物の敷地・設備・構造・用途についての最低基準に関する日本の法律である。前身は市街地建築物法（大正8年法律第37号）である。
+国土交通省（旧・建設省）住宅局市街地建築課が所管し、同省都市局都市計画課・市街地整備課、不動産・建設経済局建設業課、厚生労働省健康・生活衛生局生活衛生課ならびに環境省環境再生・資源循環局廃棄物適正処理推進課と連携して執行にあたる。
+
+
+--- e-Gov（法令） 取得結果 ---
+（今回のテーマでは対象外のためスキップしました）
+
+--- Qiita 取得結果 ---
+（今回のテーマでは対象外のためスキップしました）
+
+--- エラー・成功件数まとめ ---
+arXiv: 取得 成功 / 件数 3 / DB保存 3件
+Wikipedia: 取得 成功 / 件数 2 / DB保存 2件
+e-Gov: 取得 成功 / 件数 0 / DB保存 0件
+Qiita: 取得 成功 / 件数 0 / DB保存 0件
+失敗したソース: なし

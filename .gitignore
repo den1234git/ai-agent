@@ -6,3 +6,26 @@ __pycache__/
 .venv/
 *.log
 *.bak
+*.bak_*
+*.backup*
+*.broken
+
+# 認証・シークレット
+.env
+moltbook_credentials.json
+
+# 大容量ログ・データ
+*.jsonl
+village_individual_memory.json
+village_prediction_log.json
+model_comparison_result.json
+work_logs/
+layer3_events/
+karte_genpon_backup/
+karte_sandbox/
+c2s_output_medical/
+c2s_output_shobo/
+tts_output/
+_backups/
+backups/
+_deleted_backup/

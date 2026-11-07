@@ -1,0 +1,390 @@
+{
+  "active": false,
+  "round": 2,
+  "phase": "done",
+  "sub_index": 3,
+  "players": {
+    "router": {
+      "role_type": "villager",
+      "alive": true,
+      "kote": "翠風"
+    },
+    "llama3_2": {
+      "role_type": "werewolf",
+      "alive": false,
+      "kote": "蒼電"
+    },
+    "swallow": {
+      "role_type": "villager",
+      "alive": false,
+      "kote": "神楽"
+    },
+    "granite": {
+      "role_type": "villager",
+      "alive": false,
+      "kote": "巌"
+    },
+    "lfm_jp": {
+      "role_type": "villager",
+      "alive": true,
+      "kote": "青空"
+    }
+  },
+  "player_order": [
+    "llama3_2",
+    "router",
+    "swallow",
+    "granite",
+    "lfm_jp"
+  ],
+  "day_transcript": [
+    {
+      "role": "llama3_2",
+      "kote": "蒼電",
+      "message": "今夜は神楽の犠牲が大変なことかと思います。彼の死は、村の安全を守るために重要な犠牲だと思います。",
+      "speech_fallback": false
+    },
+    {
+      "role": "router",
+      "kote": "翠風",
+      "message": "人狼を見つけてもよいと思う。神楽の犠牲がどのように使われるかは重要だ。",
+      "speech_fallback": false
+    },
+    {
+      "role": "lfm_jp",
+      "kote": "青空",
+      "message": "人狼を見つけるために、神楽の犠牲は村の安全を守るために重要な役割を果たしていると考えます。",
+      "speech_fallback": false
+    }
+  ],
+  "votes": {},
+  "event_log": [
+    "ゲーム開始: 人狼は 蒼電（非公開）",
+    "R1昼: 蒼電「{\"message\": \"いくつか人狼を見かけたように思える」",
+    "R1昼: 翠風「みんなで確認し合いましょう。もし人狼がいるなら、何か異常な行」",
+    "R1昼: 神楽「皆さんの意見を聞くのは大切ですが、少し焦りすぎているように感」",
+    "R1昼: 巌「巌さん、 neural networkのwerservers」",
+    "R1昼: 青空「神楽さんと巌さんを確認してみる」",
+    "R1昼: 巌(granite)が処刑（村人）。票: llama3_2:2、router:0、swallow:1、granite:2、lfm_jp:0",
+    "R1夜: 神楽(swallow)が犠牲",
+    "R2昼: 蒼電「今夜は神楽の犠牲が大変なことかと思います。彼の死は、村の安全」",
+    "R2昼: 翠風「人狼を見つけてもよいと思う。神楽の犠牲がどのように使われるか」",
+    "R2昼: 青空「人狼を見つけるために、神楽の犠牲は村の安全を守るために重要な」",
+    "R2昼: 蒼電(llama3_2)が処刑（人狼）。票: llama3_2:2、router:0、lfm_jp:1",
+    "ゲーム終了: 村人チームの勝利！"
+  ],
+  "result": "village",
+  "log": [
+    {
+      "type": "game_start",
+      "round": 1,
+      "players": {
+        "router": {
+          "role_type": "villager",
+          "kote": "翠風"
+        },
+        "llama3_2": {
+          "role_type": "werewolf",
+          "kote": "蒼電"
+        },
+        "swallow": {
+          "role_type": "villager",
+          "kote": "神楽"
+        },
+        "granite": {
+          "role_type": "villager",
+          "kote": "巌"
+        },
+        "lfm_jp": {
+          "role_type": "villager",
+          "kote": "青空"
+        }
+      },
+      "ts": "2026-11-02T01:25:25"
+    },
+    {
+      "type": "speak",
+      "round": 1,
+      "phase": "day",
+      "role": "llama3_2",
+      "kote": "蒼電",
+      "message": "{\"message\": \"いくつか人狼を見かけたように思えることがあるよね?\\これからも気をつけるように\"}\n{\"message\": \"まずは神楽さんと巌さんから聞くと良いかな?\"}",
+      "speech_fallback": false,
+      "ts": "2026-11-02T01:25:44"
+    },
+    {
+      "type": "speak",
+      "round": 1,
+      "phase": "day",
+      "role": "router",
+      "kote": "翠風",
+      "message": "みんなで確認し合いましょう。もし人狼がいるなら、何か異常な行動を見つけるはずです。",
+      "speech_fallback": false,
+      "ts": "2026-11-02T01:25:58"
+    },
+    {
+      "type": "speak",
+      "round": 1,
+      "phase": "day",
+      "role": "swallow",
+      "kote": "神楽",
+      "message": "皆さんの意見を聞くのは大切ですが、少し焦りすぎているように感じます。落ち着いて状況を見極めていきましょう。",
+      "speech_fallback": false,
+      "ts": "2026-11-02T01:26:19"
+    },
+    {
+      "type": "speak",
+      "round": 1,
+      "phase": "day",
+      "role": "granite",
+      "kote": "巌",
+      "message": "巌さん、 neural networkのwerservers(https://nn.lab.uesc.br/)の調査をお手伝いしましょう。 neural networkのwerservers(https://nn.lab.uesc.br/)は、人間の脳と同じようにfunctionality(func",
+      "speech_fallback": false,
+      "ts": "2026-11-02T01:26:42"
+    },
+    {
+      "type": "speak",
+      "round": 1,
+      "phase": "day",
+      "role": "lfm_jp",
+      "kote": "青空",
+      "message": "神楽さんと巌さんを確認してみる",
+      "speech_fallback": false,
+      "ts": "2026-11-02T01:26:56"
+    },
+    {
+      "type": "vote",
+      "round": 1,
+      "voter": "llama3_2",
+      "voter_kote": "蒼電",
+      "target": "granite",
+      "reason": "神楽さんと巌さんから聞くと良いかな?",
+      "tally": {
+        "llama3_2": 0,
+        "router": 0,
+        "swallow": 0,
+        "granite": 1,
+        "lfm_jp": 0
+      },
+      "votes_cast": 1,
+      "votes_total": 5,
+      "votes_remaining": 4,
+      "clinched": null,
+      "tally_text": "granite:1票（1/5票）",
+      "ts": "2026-11-02T01:27:11"
+    },
+    {
+      "type": "vote",
+      "round": 1,
+      "voter": "router",
+      "voter_kote": "翠風",
+      "target": "granite",
+      "reason": "巌さんがneural networkのwerserversに関する調査をお手伝いする話題は、他のプレイヤーが人狼の正体を探求しようとするのを妨げる",
+      "tally": {
+        "llama3_2": 0,
+        "router": 0,
+        "swallow": 0,
+        "granite": 2,
+        "lfm_jp": 0
+      },
+      "votes_cast": 2,
+      "votes_total": 5,
+      "votes_remaining": 3,
+      "clinched": null,
+      "tally_text": "granite:2票（2/5票）",
+      "ts": "2026-11-02T01:27:25"
+    },
+    {
+      "type": "vote",
+      "round": 1,
+      "voter": "swallow",
+      "voter_kote": "神楽",
+      "target": "llama3_2",
+      "reason": "不審な行動が見られるため。",
+      "tally": {
+        "llama3_2": 1,
+        "router": 0,
+        "swallow": 0,
+        "granite": 2,
+        "lfm_jp": 0
+      },
+      "votes_cast": 3,
+      "votes_total": 5,
+      "votes_remaining": 2,
+      "clinched": null,
+      "tally_text": "llama3_2:1票、granite:2票（3/5票）",
+      "ts": "2026-11-02T01:27:46"
+    },
+    {
+      "type": "vote",
+      "round": 1,
+      "voter": "granite",
+      "voter_kote": "巌",
+      "target": "llama3_2",
+      "reason": "llama3_2",
+      "tally": {
+        "llama3_2": 2,
+        "router": 0,
+        "swallow": 0,
+        "granite": 2,
+        "lfm_jp": 0
+      },
+      "votes_cast": 4,
+      "votes_total": 5,
+      "votes_remaining": 1,
+      "clinched": null,
+      "tally_text": "llama3_2:2票、granite:2票（4/5票）",
+      "ts": "2026-11-02T01:28:07"
+    },
+    {
+      "type": "vote",
+      "round": 1,
+      "voter": "lfm_jp",
+      "voter_kote": "青空",
+      "target": "swallow",
+      "reason": "神楽さんの発言が少し焦りすぎているように感じました。落ち着いて状況を見極めていきましょう。",
+      "tally": {
+        "llama3_2": 2,
+        "router": 0,
+        "swallow": 1,
+        "granite": 2,
+        "lfm_jp": 0
+      },
+      "votes_cast": 5,
+      "votes_total": 5,
+      "votes_remaining": 0,
+      "clinched": null,
+      "tally_text": "llama3_2:2票、swallow:1票、granite:2票（5/5票）",
+      "ts": "2026-11-02T01:28:21"
+    },
+    {
+      "type": "execute",
+      "round": 1,
+      "executed": "granite",
+      "executed_kote": "巌",
+      "role_type": "villager",
+      "tally": {
+        "llama3_2": 2,
+        "router": 0,
+        "swallow": 1,
+        "granite": 2,
+        "lfm_jp": 0
+      },
+      "ts": "2026-11-02T01:28:23"
+    },
+    {
+      "type": "attack",
+      "round": 1,
+      "wolf": "llama3_2",
+      "wolf_kote": "蒼電",
+      "victim": "swallow",
+      "victim_kote": "神楽",
+      "ts": "2026-11-02T01:28:37"
+    },
+    {
+      "type": "speak",
+      "round": 2,
+      "phase": "day",
+      "role": "llama3_2",
+      "kote": "蒼電",
+      "message": "今夜は神楽の犠牲が大変なことかと思います。彼の死は、村の安全を守るために重要な犠牲だと思います。",
+      "speech_fallback": false,
+      "ts": "2026-11-02T01:28:42"
+    },
+    {
+      "type": "speak",
+      "round": 2,
+      "phase": "day",
+      "role": "router",
+      "kote": "翠風",
+      "message": "人狼を見つけてもよいと思う。神楽の犠牲がどのように使われるかは重要だ。",
+      "speech_fallback": false,
+      "ts": "2026-11-02T01:28:55"
+    },
+    {
+      "type": "speak",
+      "round": 2,
+      "phase": "day",
+      "role": "lfm_jp",
+      "kote": "青空",
+      "message": "人狼を見つけるために、神楽の犠牲は村の安全を守るために重要な役割を果たしていると考えます。",
+      "speech_fallback": false,
+      "ts": "2026-11-02T01:29:06"
+    },
+    {
+      "type": "vote",
+      "round": 2,
+      "voter": "llama3_2",
+      "voter_kote": "蒼電",
+      "target": "lfm_jp",
+      "reason": "あくまで人狼見つけるために犠牲を捧げることしか考えていない",
+      "tally": {
+        "llama3_2": 0,
+        "router": 0,
+        "lfm_jp": 1
+      },
+      "votes_cast": 1,
+      "votes_total": 3,
+      "votes_remaining": 2,
+      "clinched": null,
+      "tally_text": "lfm_jp:1票（1/3票）",
+      "ts": "2026-11-02T01:29:17"
+    },
+    {
+      "type": "vote",
+      "round": 2,
+      "voter": "router",
+      "voter_kote": "翠風",
+      "target": "llama3_2",
+      "reason": "神楽の犠牲がどのように使われるかは重要だが、人狼を見つけるのに時間がかかっている。",
+      "tally": {
+        "llama3_2": 1,
+        "router": 0,
+        "lfm_jp": 1
+      },
+      "votes_cast": 2,
+      "votes_total": 3,
+      "votes_remaining": 1,
+      "clinched": null,
+      "tally_text": "llama3_2:1票、lfm_jp:1票（2/3票）",
+      "ts": "2026-11-02T01:29:26"
+    },
+    {
+      "type": "vote",
+      "round": 2,
+      "voter": "lfm_jp",
+      "voter_kote": "青空",
+      "target": "llama3_2",
+      "reason": "神楽の犠牲が村の安全を守るために重要な役割を果たしていると考えます。",
+      "tally": {
+        "llama3_2": 2,
+        "router": 0,
+        "lfm_jp": 1
+      },
+      "votes_cast": 3,
+      "votes_total": 3,
+      "votes_remaining": 0,
+      "clinched": null,
+      "tally_text": "llama3_2:2票、lfm_jp:1票（3/3票）",
+      "ts": "2026-11-02T01:29:35"
+    },
+    {
+      "type": "execute",
+      "round": 2,
+      "executed": "llama3_2",
+      "executed_kote": "蒼電",
+      "role_type": "werewolf",
+      "tally": {
+        "llama3_2": 2,
+        "router": 0,
+        "lfm_jp": 1
+      },
+      "ts": "2026-11-02T01:29:37"
+    },
+    {
+      "type": "game_end",
+      "result": "village",
+      "ts": "2026-11-02T01:29:37"
+    }
+  ]
+}

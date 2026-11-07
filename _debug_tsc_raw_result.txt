@@ -1,0 +1,69 @@
+returncode = 2
+
+--- stdout ---
+src/pages/__tests__/AIEditorApp.test.tsx(24,3): error TS1443: Module declaration names may only use ' or " quoted strings.
+src/pages/__tests__/AIEditorApp.test.tsx(26,70): error TS1160: Unterminated template literal.
+src/pages/AIChatArea.tsx(6,9): error TS1005: ';' expected.
+src/pages/AutoNextCheckDate.tsx(58,1): error TS2657: JSX expressions must have one parent element.
+src/pages/AutoNextCheckDate.tsx(61,1): error TS1005: '}' expected.
+src/pages/CanvasState.tsx(5,23): error TS1005: ';' expected.
+src/pages/CanvasState.tsx(6,18): error TS1005: ';' expected.
+src/pages/CanvasState.tsx(7,23): error TS1005: ';' expected.
+src/pages/CanvasState.tsx(8,12): error TS1005: ';' expected.
+src/pages/CanvasState.tsx(9,30): error TS1005: ';' expected.
+src/pages/CanvasState.tsx(12,24): error TS1005: ';' expected.
+src/pages/CanvasState.tsx(15,21): error TS1005: ';' expected.
+src/pages/CanvasState.tsx(18,27): error TS1005: ';' expected.
+src/pages/CanvasState.tsx(23,6): error TS1128: Declaration or statement expected.
+src/pages/CanvasState.tsx(24,26): error TS1005: ';' expected.
+src/pages/CanvasState.tsx(31,1): error TS1005: '}' expected.
+src/pages/CanvasToolbar.tsx(7,7): error TS1005: ';' expected.
+src/pages/ChatLogViewer.tsx(28,1): error TS1005: ')' expected.
+src/pages/ChatLogViewer.tsx(29,3): error TS1109: Expression expected.
+src/pages/GameBoard.tsx(1,34): error TS1127: Invalid character.
+src/pages/GameBoard.tsx(11,1): error TS2657: JSX expressions must have one parent element.
+src/pages/GameResult.tsx(15,1): error TS2657: JSX expressions must have one parent element.
+src/pages/GeneralSettingsTab.tsx(54,1): error TS1160: Unterminated template literal.
+src/pages/MainLayout.tsx(6,1): error TS1131: Property or signature expected.
+src/pages/MainView.tsx(47,3): error TS1160: Unterminated template literal.
+src/pages/MeetingRoomItem.tsx.tsx(7,40): error TS1005: '(' expected.
+src/pages/MeetingRoomItem.tsx.tsx(7,50): error TS1005: ',' expected.
+src/pages/MeetingRoomItem.tsx.tsx(7,74): error TS1005: ';' expected.
+src/pages/MeetingRoomList.tsx.tsx(3,40): error TS1005: '(' expected.
+src/pages/MeetingRoomList.tsx.tsx(3,47): error TS1005: ';' expected.
+src/pages/NextInspectionDateCalc.tsx(39,2): error TS17008: JSX element 'div' has no corresponding closing tag.
+src/pages/NextInspectionDateCalc.tsx(41,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/pages/NextInspectionDateCalc.tsx(42,1): error TS1005: '</' expected.
+src/pages/RoomSelectModal.tsx.tsx(8,31): error TS1127: Invalid character.
+src/pages/RoomSelectModal.tsx.tsx(10,40): error TS1005: '(' expected.
+src/pages/RoomSelectModal.tsx.tsx(10,50): error TS1005: ',' expected.
+src/pages/RoomSelectModal.tsx.tsx(10,74): error TS1005: ';' expected.
+src/pages/SettingsGeneral.tsx(21,2): error TS17008: JSX element 'div' has no corresponding closing tag.
+src/pages/SettingsGeneral.tsx(21,11): error TS17008: JSX element 'select' has no corresponding closing tag.
+src/pages/SettingsGeneral.tsx(23,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/pages/SettingsGeneral.tsx(24,1): error TS1005: '</' expected.
+src/pages/SettingsNotifications.tsx(6,1): error TS1131: Property or signature expected.
+src/pages/SettingsPanel.tsx(7,1): error TS1131: Property or signature expected.
+src/pages/StaffList.tsx(8,3): error TS1109: Expression expected.
+src/pages/TabBar.tsx(10,7): error TS1005: ';' expected.
+src/pages/TabBar.tsx(10,31): error TS1005: ';' expected.
+src/pages/TabBar.tsx(10,67): error TS1003: Identifier expected.
+src/pages/TabBar.tsx(10,69): error TS1005: ':' expected.
+src/pages/TabBar.tsx(10,86): error TS1359: Identifier expected. 'null' is a reserved word that cannot be used here.
+src/pages/TabBar.tsx(10,91): error TS1005: ':' expected.
+src/pages/TabBar.tsx(12,1): error TS1131: Property or signature expected.
+src/pages/TabBar.tsx(57,2): error TS1160: Unterminated template literal.
+src/pages/TabManagerComponent.tsx(58,1): error TS1160: Unterminated template literal.
+src/pages/TabSwitcher.tsx(5,9): error TS1005: ';' expected.
+src/pages/UserInfoForm.tsx(7,1): error TS1131: Property or signature expected.
+src/pages/一般設定.tsx(6,7): error TS1005: ';' expected.
+src/pages/一般設定.tsx(22,8): error TS1005: ';' expected.
+src/pages/一般設定.tsx(22,16): error TS1005: ';' expected.
+src/pages/一般設定.tsx(24,1): error TS1131: Property or signature expected.
+src/pages/設定画面.tsx(6,1): error TS1131: Property or signature expected.
+src/pages/設定画面.tsx(9,7): error TS1005: ';' expected.
+src/pages/設定画面.tsx(23,1): error TS1131: Property or signature expected.
+
+
+--- stderr ---
+(空)

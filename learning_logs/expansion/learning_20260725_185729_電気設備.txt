@@ -1,0 +1,44 @@
+=== AI_001 学習ログ ===
+日時: 2026-07-25 18:57:29
+カテゴリ（拡張学習）: 電気設備
+
+--- 検索クエリ（AIが自分で立てた問い） ---
+arXivクエリ: Electricity Equipment Emergency Power Fire Protection Electrical Equipment
+Wikipediaクエリ: 電気設備 絆水設備 自己発電設備 蓄電池設備
+e-Govクエリ: （今回は対象外）
+Qiitaクエリ: （今回は対象外）
+クエリ選定理由: arXivでの学術的な視点から、最優先で指定された学習テーマに関する情報を得ることを目的とします。
+
+--- arXiv 取得結果 ---
+・Robustness Evaluation of Machine Learning Models for Fault Classification and Localization In Power System Protection
+  URL: http://arxiv.org/abs/2512.15385v1
+  要約: The growing penetration of renewable and distributed generation is transforming power systems and challenging conventional protection schemes that rely on fixed settings and local measurements. Machine learning (ML) offers a data-driven alternative for centralized fault classification (FC) and fault
+
+・Data Assimilation of Satellite Fire Detection in Coupled Atmosphere-Fire Simulation by WRF-SFIRE
+  URL: http://arxiv.org/abs/1410.6948v1
+  要約: Currently available satellite active fire detection products from the VIIRS and MODIS instruments on polar-orbiting satellites produce detection squares in arbitrary locations. There is no global fire/no fire map, no detection under cloud cover, false negatives are common, and the detection squares 
+
+・Electric Vehicle Attack Impact on Power Grid Operation
+  URL: http://arxiv.org/abs/2111.11317v1
+  要約: The increasing need for reducing greenhouse gas emissions and the drive for green cities have promoted the use of electric vehicles due to their environmental benefits. In fact, countries have set their own targets and are offering incentives for people to purchase EVs as opposed to traditional gaso
+
+
+--- Wikipedia 取得結果 ---
+・能登半島地震 (2024年)
+  URL: https://ja.wikipedia.org/wiki/%E8%83%BD%E7%99%BB%E5%8D%8A%E5%B3%B6%E5%9C%B0%E9%9C%87_%282024%E5%B9%B4%29
+  抜粋: 能登半島地震（のとはんとうじしん）は、2024年（令和6年）1月1日16時10分 (JST) に、石川県の能登半島地下16 km、鳳珠郡穴水町の北東42 km、輪島市からは東北東に約30 kmの珠洲市内で発生した内陸地殻内地震。地震の規模はМ7.6（気象庁）で、輪島市と羽咋郡志賀町で最大震度7を観測した。震度7が記録されたのは、2018年の北海道胆振東部地震以来、観測史上7回目となる。
+能登半島西方沖から佐渡島西方沖にかけて伸びる活断層を震源とする。能登地方では2018年ごろから群発地震が発生しており、特に2020年12月ごろから本震までの地震回数はそれまでの約400倍に増加していた（前震と余
+
+
+--- e-Gov（法令） 取得結果 ---
+（今回のテーマでは対象外のためスキップしました）
+
+--- Qiita 取得結果 ---
+（今回のテーマでは対象外のためスキップしました）
+
+--- エラー・成功件数まとめ ---
+arXiv: 取得 成功 / 件数 3 / DB保存 3件
+Wikipedia: 取得 成功 / 件数 1 / DB保存 1件
+e-Gov: 取得 成功 / 件数 0 / DB保存 0件
+Qiita: 取得 成功 / 件数 0 / DB保存 0件
+失敗したソース: なし

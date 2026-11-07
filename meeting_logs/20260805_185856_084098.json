@@ -1,0 +1,44 @@
+{
+  "timestamp": "20260805_185856_084098",
+  "question": "今日の点検報告書のタイトルは「点検結果報告書」と「点検報告書」どちらが適切か？",
+  "context": "消防設備の法定点検で使う様式のタイトルを決めたい。",
+  "rounds": 3,
+  "opinions": [
+    {
+      "role": "llama3_2",
+      "voted": true,
+      "opinion": "点検結果報告書",
+      "reason": "より具体的な情報が提示されているため、より明確な理解が可能になることが多いです。"
+    },
+    {
+      "role": "router",
+      "voted": true,
+      "opinion": "「点検結果報告書」と「点検報告書」どちらも適切ではない",
+      "reason": "法定的なタイトルは、明確性と特定の目的に合致するものが必要であり、「点検結果報告書」という表現がそれに対応している"
+    },
+    {
+      "role": "gemma3",
+      "voted": true,
+      "opinion": "点検結果報告書",
+      "reason": "より具体的に、何が点検されたのかを明示しているため、内容を把握しやすい。"
+    }
+  ],
+  "aggregation": {
+    "ok": true,
+    "clusters": [
+      {
+        "label": "同じタイトルが適切",
+        "member_indexes": [
+          0,
+          2
+        ]
+      }
+    ],
+    "error": null
+  },
+  "decided": true,
+  "verdict": "同じタイトルが適切",
+  "vote_count": 2,
+  "total_votes": 3,
+  "needs_human": false
+}
