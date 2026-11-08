@@ -13,6 +13,7 @@ __pycache__/
 # 認証・シークレット
 .env
 moltbook_credentials.json
+diary_keys/
 
 # 大容量ログ・データ
 *.jsonl

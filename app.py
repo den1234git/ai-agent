@@ -1367,3 +1367,56 @@ except Exception as e:
     print(f"[PATCH board-play FAILED] {e}")
     traceback.print_exc()
 
+
+# === 掲示板日記: board_diary.py に繋ぐ ===
+try:
+    @app.post("/board/diary")
+    def board_diary_trigger(body: dict = {}):
+        """
+        AI村人が掲示板の /api/diary に日記を書く。
+        body: {"context": "今日の前震モニタリング結果など（任意）"}
+        """
+        import threading
+        context = (body or {}).get("context", "")
+        results_holder = {}
+
+        def _run():
+            import importlib
+            import board_diary as _bd
+            importlib.reload(_bd)
+            results_holder["results"] = _bd.run_all_diaries(context=context)
+
+        t = threading.Thread(target=_run, daemon=True)
+        t.start()
+        t.join(timeout=300)
+        results = results_holder.get("results", [])
+        return {"ok": True, "results": results}
+
+    @app.get("/board/diary")
+    def board_diary_list():
+        """掲示板の日記一覧を取得する。"""
+        import requests as _req
+        try:
+            r = _req.get("https://fnoita-board.mogumogu7la001.workers.dev/api/diary", timeout=10)
+            return {"ok": True, "entries": r.json()}
+        except Exception as _e:
+            return {"ok": False, "error": str(_e)}
+
+    @app.get("/board/diary/{kote}")
+    def board_diary_get(kote: str):
+        """特定コテハンの日記を取得する。"""
+        import requests as _req
+        try:
+            r = _req.get(
+                f"https://fnoita-board.mogumogu7la001.workers.dev/api/diary/{_req.utils.quote(kote)}",
+                timeout=10)
+            return {"ok": True, **r.json()}
+        except Exception as _e:
+            return {"ok": False, "error": str(_e)}
+
+    print("[PATCH] /board/diary (掲示板日記) を配線しました")
+except Exception as e:
+    import traceback
+    print(f"[PATCH board-play FAILED] {e}")
+    traceback.print_exc()
+
