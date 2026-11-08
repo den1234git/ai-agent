@@ -913,10 +913,16 @@ def _aggregate_picks(all_results: list[dict], n_horses: int) -> tuple[list[dict]
     aggregated = []
     for umaban in range(1, n_horses + 1):
         probs = probs_by_horse[umaban]
+        avg_prob = round(statistics.mean(probs), 1) if probs else None
+        std_prob = round(statistics.stdev(probs), 1) if len(probs) >= 2 else 0.0
+        # 一致度: std=0→100%, std=50→0% のリニアスケール
+        consensus = round(max(0.0, 100.0 - std_prob * 2), 1) if probs else None
         aggregated.append({
-            "umaban":   umaban,
-            "avg_prob": round(statistics.mean(probs), 1) if probs else None,
-            "n_votes":  len(probs),
+            "umaban":       umaban,
+            "avg_prob":     avg_prob,
+            "std_prob":     std_prob,
+            "consensus_pct": consensus,
+            "n_votes":      len(probs),
         })
     aggregated.sort(key=lambda x: x["avg_prob"] if x["avg_prob"] is not None else -1, reverse=True)
 
@@ -1452,13 +1458,26 @@ def stats(days: int = 90) -> dict:
         for k, v in sorted(member_map.items())
     }
 
+    # 馬1頭ごとの一致度（consensus）集計（予測があるエントリのみ）
+    consensus_vals = []
+    for e in resolved:
+        agg = e.get("aggregated", [])
+        if not agg:
+            continue
+        # 上位3頭の consensus_pct 平均
+        top3_cons = [h["consensus_pct"] for h in agg[:3] if h.get("consensus_pct") is not None]
+        if top3_cons:
+            consensus_vals.append(statistics.mean(top3_cons))
+    avg_consensus = round(statistics.mean(consensus_vals), 1) if consensus_vals else None
+
     return {
-        "ok":           True,
-        "n_total":      n_total,
-        "n_hit":        n_hit,
-        "hit_rate_pct": round(n_hit / n_total * 100, 1),
-        "by_place":     by_place,
-        "by_member":    by_member,
+        "ok":            True,
+        "n_total":       n_total,
+        "n_hit":         n_hit,
+        "hit_rate_pct":  round(n_hit / n_total * 100, 1),
+        "avg_consensus": avg_consensus,  # 予想の一致度平均（高いほど村の意見が揃っている）
+        "by_place":      by_place,
+        "by_member":     by_member,
     }
 
 

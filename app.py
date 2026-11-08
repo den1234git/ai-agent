@@ -894,6 +894,44 @@ try:
         entries.reverse()
         return {"ok": True, "entries": entries[:50]}
 
+    @app.get("/api/jishin/precursor/history")
+    def precursor_history_endpoint(region: str = None, days: int = 30):
+        """前震確率の時系列を返す。region指定で絞り込み可。"""
+        import importlib
+        import jishin_precursor as _p
+        importlib.reload(_p)
+        try:
+            return _p.precursor_history(region=region, days=days)
+        except Exception as _e:
+            return {"ok": False, "error": str(_e)}
+
+    @app.get("/api/jishin/precursor/consensus")
+    def precursor_consensus_endpoint(days: int = 30):
+        """前震モニタリングのメンバー間一致度を集計して返す。"""
+        import importlib, json as _json, pathlib
+        import jishin_precursor as _p
+        importlib.reload(_p)
+        path = pathlib.Path(_p.LEDGER_PATH)
+        if not path.exists():
+            return {"ok": True, "entries": []}
+        cutoff = (__import__("datetime").date.today()
+                  - __import__("datetime").timedelta(days=days)).isoformat()
+        rows = []
+        for line in path.read_text(encoding="utf-8").splitlines():
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                e = _json.loads(line)
+            except Exception:
+                continue
+            if e.get("date", "") < cutoff:
+                continue
+            cons = e.get("consensus_scores", {})
+            rows.append({"date": e.get("date"), "id": e.get("id"), "consensus": cons})
+        rows.sort(key=lambda x: x.get("date", ""))
+        return {"ok": True, "days": days, "entries": rows}
+
     print("[PATCH] /jishin/precursor (前兆モニター) を配線しました")
     print("[PATCH] /jishin/geonet (電子基準点) を配線しました")
     print("[PATCH] /api/jishin/resolve_past (過去予測自動照合) を配線しました")
@@ -1092,6 +1130,62 @@ try:
         except Exception as e:
             print(f"[scheduler] 前震resolved照合ジョブ エラー: {e}")
 
+    def _brier_score_job():
+        """
+        毎日深夜2時: 前震モニタリングのBrierスコアをresolved済みエントリに付与 +
+        yosouya一般台帳の自動採点。
+        """
+        import importlib, sys as _sys, json as _json
+        from pathlib import Path as _Path
+        # 前震モニタリング: resolved済みエントリにBrierスコアをキャッシュ
+        try:
+            import jishin_precursor as _p
+            importlib.reload(_p)
+            path = _Path(_p.LEDGER_PATH)
+            if path.exists():
+                lines = [l.strip() for l in path.read_text(encoding="utf-8").splitlines() if l.strip()]
+                updated = []
+                changed = 0
+                for line in lines:
+                    try:
+                        e = _json.loads(line)
+                    except Exception:
+                        updated.append(line)
+                        continue
+                    if isinstance(e.get("resolved"), dict) and "brier" not in e:
+                        brier_per_region = {}
+                        for region in _p.REGIONS:
+                            rv = e["resolved"].get(region, {})
+                            if not isinstance(rv, dict):
+                                continue
+                            pred = rv.get("pred_prob")
+                            hit  = rv.get("hit")
+                            if pred is not None and hit is not None:
+                                brier_per_region[region] = round(
+                                    (pred / 100 - (1 if hit else 0)) ** 2, 4)
+                        if brier_per_region:
+                            e["brier"] = brier_per_region
+                            e["brier_avg"] = round(
+                                sum(brier_per_region.values()) / len(brier_per_region), 4)
+                            changed += 1
+                    updated.append(_json.dumps(e, ensure_ascii=False))
+                if changed:
+                    path.write_text("\n".join(updated) + "\n", encoding="utf-8")
+                print(f"[scheduler] Brierスコア付与完了: {changed}件更新")
+        except Exception as _e:
+            print(f"[scheduler] Brierスコアジョブ エラー: {_e}")
+        # yosouya一般台帳の自動採点
+        _yp = r"C:\ai_agent\AI_001\yosouya"
+        if _yp not in _sys.path:
+            _sys.path.insert(0, _yp)
+        try:
+            import yosouya_score as _ys
+            importlib.reload(_ys)
+            result = _ys.check_and_score()
+            print(f"[scheduler] yosouya自動採点完了: {result}")
+        except Exception as _e:
+            print(f"[scheduler] yosouya採点ジョブ エラー: {_e}")
+
     def _election_grade_job():
         """
         毎日深夜1時: 選挙予想の自動採点。
@@ -1155,6 +1249,9 @@ try:
     # 選挙: 毎日深夜1時 自動採点
     _scheduler.add_job(_election_grade_job,  "cron", hour=1,  minute=0,
                        id="election_grade",  replace_existing=True)
+    # Brierスコア自動集計: 毎日深夜2時
+    _scheduler.add_job(_brier_score_job,     "cron", hour=2,  minute=0,
+                       id="brier_score",     replace_existing=True)
     _scheduler.start()
     print("[scheduler] ジョブ登録完了:")
     print("  地震: 毎朝6:00 予測 / 毎夜22:00 答え合わせ")
@@ -1192,6 +1289,14 @@ try:
         t = threading.Thread(target=_jishin_resolve_job, daemon=True)
         t.start()
         return {"ok": True, "message": "地震答え合わせを開始しました（バックグラウンド実行）"}
+
+    @app.post("/jishin/trigger/brier")
+    def jishin_trigger_brier():
+        """今すぐBrierスコア集計を実行する（手動トリガ）"""
+        import threading
+        t = threading.Thread(target=_brier_score_job, daemon=True)
+        t.start()
+        return {"ok": True, "message": "Brierスコア集計を開始しました（バックグラウンド実行）"}
 
     @app.post("/keiba/trigger/predict")
     def keiba_trigger_predict():

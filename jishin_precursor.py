@@ -368,13 +368,78 @@ def precursor_stats(days: int = 30) -> dict:
             continue
         hit_rate = round(s["hits"] / s["n"] * 100, 1)
         avg_pred = round(sum(s["probs"]) / len(s["probs"]), 1) if s["probs"] else None
+        # Brier スコア: (pred/100 - outcome)^2 の平均
+        brier_scores = []
+        for e in resolved:
+            rv = e["resolved"].get(region, {})
+            if not isinstance(rv, dict):
+                continue
+            pred = rv.get("pred_prob")
+            hit  = rv.get("hit")
+            if pred is not None and hit is not None:
+                brier_scores.append((pred / 100 - (1 if hit else 0)) ** 2)
+        avg_brier = round(sum(brier_scores) / len(brier_scores), 4) if brier_scores else None
         result[region] = {
             "n": s["n"], "hits": s["hits"],
             "hit_rate_pct": hit_rate,
             "avg_pred_prob": avg_pred,
+            "avg_brier": avg_brier,  # 低いほど良い（0.0〜1.0）
         }
 
     return {"ok": True, "n": len(resolved), "regions": result}
+
+
+def precursor_history(region: str | None = None, days: int = 30) -> dict:
+    """
+    台帳から過去N日分の確率推移を返す。
+    region 指定あり: {series: [{date, at, id, prob, consensus_pct}]}
+    region 指定なし: {entries: [{date, at, id, probs, alert_regions}]}
+    """
+    path = Path(LEDGER_PATH)
+    if not path.exists():
+        return {"ok": True, "entries": [], "series": []}
+
+    cutoff = (datetime.date.today() - datetime.timedelta(days=days)).isoformat()
+    entries = []
+    for line in path.read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if not line:
+            continue
+        try:
+            e = json.loads(line)
+        except Exception:
+            continue
+        if e.get("date", "") < cutoff:
+            continue
+        entries.append(e)
+
+    entries.sort(key=lambda x: x.get("date", ""))
+
+    if region:
+        series = []
+        for e in entries:
+            prob = e.get("aggregated_probs", {}).get(region)
+            cons = (e.get("consensus_scores", {}).get(region) or {}).get("consensus_pct")
+            series.append({
+                "date": e.get("date", ""),
+                "at":   e.get("at", ""),
+                "id":   e.get("id", ""),
+                "prob": prob,
+                "consensus_pct": cons,
+                "alert": region in e.get("alert_regions", []),
+            })
+        return {"ok": True, "region": region, "days": days, "series": series}
+    else:
+        rows = []
+        for e in entries:
+            rows.append({
+                "date":          e.get("date", ""),
+                "at":            e.get("at", ""),
+                "id":            e.get("id", ""),
+                "probs":         e.get("aggregated_probs", {}),
+                "alert_regions": e.get("alert_regions", []),
+            })
+        return {"ok": True, "days": days, "entries": rows}
 
 
 # ── データ取得・集計 ────────────────────────────────────────────
@@ -636,6 +701,28 @@ def _aggregate_probs(member_results: list[dict]) -> dict[str, float | None]:
     }
 
 
+def _calc_consensus(member_results: list[dict]) -> dict[str, dict]:
+    """
+    地域ごとにメンバー間の意見一致度を計算する。
+    consensus_pct: std=0 → 100%, std=50 → 0% のリニアスケール
+    """
+    region_vals: dict[str, list[float]] = {r: [] for r in REGIONS}
+    for m in member_results:
+        for region, prob in m.get("probs", {}).items():
+            if region in region_vals:
+                region_vals[region].append(prob)
+    result: dict[str, dict] = {}
+    for region, vals in region_vals.items():
+        if not vals:
+            result[region] = {"n": 0, "avg": None, "std": None, "consensus_pct": None}
+            continue
+        avg = round(statistics.mean(vals), 1)
+        std = round(statistics.stdev(vals), 1) if len(vals) >= 2 else 0.0
+        consensus = round(max(0.0, 100.0 - std * 2), 1)
+        result[region] = {"n": len(vals), "avg": avg, "std": std, "consensus_pct": consensus}
+    return result
+
+
 # ── メインエントリ ─────────────────────────────────────────────
 
 def run_precursor_monitor(members: list[dict] | None = None) -> dict:
@@ -694,6 +781,7 @@ def run_precursor_monitor(members: list[dict] | None = None) -> dict:
             member_results.append(fut.result())
 
     aggregated = _aggregate_probs(member_results)
+    consensus  = _calc_consensus(member_results)
 
     # 活動量サマリ（quakesリストは省いてコンパクトに）
     activity_summary = {
@@ -714,6 +802,7 @@ def run_precursor_monitor(members: list[dict] | None = None) -> dict:
         "ionosphere":   iono_data,
         "member_results": member_results,
         "aggregated_probs": aggregated,
+        "consensus_scores": consensus,
         "resolved": None,
     }
 
