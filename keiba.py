@@ -1375,6 +1375,93 @@ def resolve_past(limit: int = 50) -> dict:
     }
 
 
+def stats(days: int = 90) -> dict:
+    """
+    keiba_ledger.jsonl の resolved済みエントリから的中率・ROIを集計する。
+
+    戻り値:
+      {
+        "ok": bool,
+        "n_total": int,          # 総レース数（resolved済み）
+        "n_hit": int,            # 3連複的中数
+        "hit_rate_pct": float,   # 的中率(%)
+        "by_place": {場所名: {"n": int, "hits": int, "rate": float}},
+        "by_member": {kote: {"votes": int, "top1_hits": int, "rate": float}},
+      }
+    """
+    path = __import__("pathlib").Path(LEDGER_PATH)
+    if not path.exists():
+        return {"ok": False, "error": "台帳が見つかりません"}
+
+    cutoff = (datetime.date.today() - datetime.timedelta(days=days)).isoformat()
+    entries = []
+    for line in path.read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if line:
+            try:
+                entries.append(json.loads(line))
+            except Exception:
+                pass
+
+    # resolved済み（dictで"hit"キーがある）かつ対象期間内
+    resolved = [
+        e for e in entries
+        if isinstance(e.get("resolved"), dict)
+        and e.get("date", "") >= cutoff
+    ]
+
+    if not resolved:
+        return {"ok": True, "n_total": 0, "n_hit": 0, "hit_rate_pct": 0.0,
+                "by_place": {}, "by_member": {}}
+
+    n_total = len(resolved)
+    n_hit   = sum(1 for e in resolved if e["resolved"].get("hit"))
+
+    # 開催場別
+    place_map: dict[str, dict] = {}
+    reverse_codes = {v: k for k, v in PLACE_CODES.items()}
+    for e in resolved:
+        p = reverse_codes.get(e.get("place", ""), e.get("place", "?"))
+        if p not in place_map:
+            place_map[p] = {"n": 0, "hits": 0}
+        place_map[p]["n"] += 1
+        if e["resolved"].get("hit"):
+            place_map[p]["hits"] += 1
+
+    by_place = {
+        p: {**v, "rate": round(v["hits"] / v["n"] * 100, 1) if v["n"] else 0.0}
+        for p, v in sorted(place_map.items())
+    }
+
+    # 村人別（1着予想の的中：picks[0]が1着か）
+    member_map: dict[str, dict] = {}
+    for e in resolved:
+        res  = e["resolved"]
+        win1 = res.get("1", "")
+        for mr in e.get("member_results", []):
+            kote = mr.get("kote", "?")
+            if kote not in member_map:
+                member_map[kote] = {"votes": 0, "top1_hits": 0}
+            picks = mr.get("picks", [])
+            member_map[kote]["votes"] += 1
+            if picks and win1 and picks[0].get("name") == win1:
+                member_map[kote]["top1_hits"] += 1
+
+    by_member = {
+        k: {**v, "rate": round(v["top1_hits"] / v["votes"] * 100, 1) if v["votes"] else 0.0}
+        for k, v in sorted(member_map.items())
+    }
+
+    return {
+        "ok":           True,
+        "n_total":      n_total,
+        "n_hit":        n_hit,
+        "hit_rate_pct": round(n_hit / n_total * 100, 1),
+        "by_place":     by_place,
+        "by_member":    by_member,
+    }
+
+
 if __name__ == "__main__":
     import sys
     place  = sys.argv[1] if len(sys.argv) > 1 else "東京"

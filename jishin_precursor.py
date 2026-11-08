@@ -32,9 +32,13 @@ LEDGER_PATH = os.environ.get(
 JMA_LIST_URL = "https://www.jma.go.jp/bosai/quake/data/list.json"
 
 # NOAA宇宙天気API
-NOAA_KP_URL   = "https://services.swpc.noaa.gov/json/planetary_k_index_1m.json"
-NOAA_IMF_URL  = "https://services.swpc.noaa.gov/json/rtsw/rtsw_mag_1m.json"
-NOAA_XRAY_URL = "https://services.swpc.noaa.gov/json/goes/primary/xrays-1-day.json"
+NOAA_KP_URL     = "https://services.swpc.noaa.gov/json/planetary_k_index_1m.json"
+NOAA_IMF_URL    = "https://services.swpc.noaa.gov/json/rtsw/rtsw_mag_1m.json"
+NOAA_XRAY_URL   = "https://services.swpc.noaa.gov/json/goes/primary/xrays-1-day.json"
+NOAA_SCALES_URL = "https://services.swpc.noaa.gov/products/noaa-scales.json"
+
+# USGS地震API（日本周辺のM5以上照合用）
+USGS_QUAKE_URL = "https://earthquake.usgs.gov/fdsnws/event/1/query"
 
 # ── 地域定義（緯度・経度の矩形） ────────────────────────────────
 REGIONS = {
@@ -177,6 +181,200 @@ def fetch_xray() -> dict:
         }
     except Exception as e:
         return {"ok": False, "reason": str(e)}
+
+
+def fetch_ionosphere_r() -> dict:
+    """
+    NOAA宇宙天気スケールのRスケール（電波障害 = 電離層擾乱）を取得。
+    R0=なし, R1〜R2=軽度, R3〜R5=重度
+    """
+    try:
+        r = requests.get(NOAA_SCALES_URL, timeout=10)
+        data = r.json()
+        # キー "0" が現在, "-1"〜"-27" が過去27日
+        current = data.get("0", {})
+        r_scale = current.get("R", {})
+        s_scale = current.get("S", {})
+        g_scale = current.get("G", {})
+        r_val = int(r_scale.get("Scale", 0) or 0)
+        level = "ACTIVE" if r_val >= 2 else "QUIET"
+        return {
+            "ok": True,
+            "R": r_val,          # 電波障害 (電離層擾乱)
+            "S": int(s_scale.get("Scale", 0) or 0),  # 太陽放射線嵐
+            "G": int(g_scale.get("Scale", 0) or 0),  # 地磁気嵐 (Gスケール)
+            "level": level,
+            "timestamp": current.get("DateStamp", "") + " " + current.get("TimeStamp", ""),
+        }
+    except Exception as e:
+        return {"ok": False, "reason": str(e)}
+
+
+# ── 前震モニタリング答え合わせ ──────────────────────────────────
+
+def resolve_precursor_past(days_back: int = 7) -> dict:
+    """
+    precursor_ledger.jsonl の resolved=null エントリに対して
+    USGS APIから翌24h以内の日本周辺M5以上地震を照合し、resolved を埋める。
+
+    resolved フィールド形式:
+      {
+        地域名: {"hit": bool, "quakes": [{"mag": float, "place": str, "time": str}]},
+        ...
+        "resolved_at": "ISO8601",
+        "source": "usgs",
+      }
+    """
+    path = Path(LEDGER_PATH)
+    if not path.exists():
+        return {"ok": False, "error": "台帳が見つかりません"}
+
+    lines = [l.strip() for l in path.read_text(encoding="utf-8").splitlines() if l.strip()]
+    entries = []
+    for line in lines:
+        try:
+            entries.append(json.loads(line))
+        except Exception:
+            entries.append({"_raw": line})
+
+    cutoff = datetime.date.today() - datetime.timedelta(days=1)  # 昨日以前のみ
+    targets = [
+        e for e in entries
+        if isinstance(e, dict) and "_raw" not in e
+        and e.get("resolved") is None
+        and e.get("at", "") <= cutoff.isoformat()
+    ]
+
+    n_resolved = 0
+    n_missing  = 0
+
+    for entry in targets:
+        at_str = entry.get("at", "")
+        try:
+            at_dt = datetime.datetime.fromisoformat(at_str)
+        except Exception:
+            n_missing += 1
+            continue
+
+        # 予測対象: 翌24h以内
+        start = at_dt
+        end   = at_dt + datetime.timedelta(hours=24)
+
+        try:
+            resp = requests.get(USGS_QUAKE_URL, params={
+                "format": "geojson",
+                "starttime": start.strftime("%Y-%m-%dT%H:%M:%S"),
+                "endtime":   end.strftime("%Y-%m-%dT%H:%M:%S"),
+                "minmagnitude": 5.0,
+                "minlatitude":  24.0, "maxlatitude":  46.0,
+                "minlongitude": 122.0, "maxlongitude": 146.0,
+            }, timeout=15)
+            features = resp.json().get("features", [])
+        except Exception:
+            n_missing += 1
+            continue
+
+        # 地域ごとにヒット判定
+        region_resolved: dict[str, dict] = {}
+        for region, bbox in REGIONS.items():
+            hits = []
+            for f in features:
+                coords = f.get("geometry", {}).get("coordinates", [])
+                if len(coords) < 2:
+                    continue
+                lon, lat = coords[0], coords[1]
+                if (bbox["lat"][0] <= lat <= bbox["lat"][1] and
+                        bbox["lon"][0] <= lon <= bbox["lon"][1]):
+                    props = f.get("properties", {})
+                    hits.append({
+                        "mag":   props.get("mag"),
+                        "place": props.get("place", ""),
+                        "time":  datetime.datetime.utcfromtimestamp(
+                            props["time"] / 1000).strftime("%Y-%m-%dT%H:%M:%SZ")
+                            if props.get("time") else "",
+                    })
+            # 予測確率
+            pred_prob = entry.get("aggregated_probs", {}).get(region)
+            region_resolved[region] = {
+                "hit":    len(hits) > 0,
+                "quakes": hits,
+                "pred_prob": pred_prob,
+            }
+
+        entry["resolved"] = {
+            **region_resolved,
+            "resolved_at": datetime.datetime.now().isoformat(timespec="seconds"),
+            "source": "usgs",
+        }
+        n_resolved += 1
+
+        hit_regions = [r for r, v in region_resolved.items() if v["hit"]]
+        print(f"[precursor] resolved: {entry['id']} ヒット地域={hit_regions or 'なし'}")
+
+    # 台帳書き戻し
+    updated = []
+    for e in entries:
+        if isinstance(e, dict) and "_raw" not in e:
+            updated.append(json.dumps(e, ensure_ascii=False))
+        elif isinstance(e, dict):
+            updated.append(e["_raw"])
+    path.write_text("\n".join(updated) + "\n", encoding="utf-8")
+
+    print(f"[precursor] resolve_past 完了: 解決={n_resolved} 未確定={n_missing}")
+    return {"ok": True, "n_resolved": n_resolved, "n_missing": n_missing}
+
+
+def precursor_stats(days: int = 30) -> dict:
+    """
+    ledger から過去N日分の前震モニタリング予測精度を集計。
+    resolved済みのみ対象。
+    """
+    path = Path(LEDGER_PATH)
+    if not path.exists():
+        return {"ok": False, "error": "台帳が見つかりません"}
+
+    cutoff = (datetime.date.today() - datetime.timedelta(days=days)).isoformat()
+    entries = []
+    for line in path.read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if line:
+            try:
+                entries.append(json.loads(line))
+            except Exception:
+                pass
+
+    resolved = [e for e in entries if e.get("resolved") and e.get("date", "") >= cutoff]
+    if not resolved:
+        return {"ok": True, "n": 0, "regions": {}}
+
+    region_stats: dict[str, dict] = {r: {"n": 0, "hits": 0, "probs": []} for r in REGIONS}
+
+    for e in resolved:
+        res = e["resolved"]
+        for region in REGIONS:
+            rv = res.get(region, {})
+            if not isinstance(rv, dict):
+                continue
+            region_stats[region]["n"] += 1
+            if rv.get("hit"):
+                region_stats[region]["hits"] += 1
+            pred = rv.get("pred_prob")
+            if pred is not None:
+                region_stats[region]["probs"].append(pred)
+
+    result = {}
+    for region, s in region_stats.items():
+        if s["n"] == 0:
+            continue
+        hit_rate = round(s["hits"] / s["n"] * 100, 1)
+        avg_pred = round(sum(s["probs"]) / len(s["probs"]), 1) if s["probs"] else None
+        result[region] = {
+            "n": s["n"], "hits": s["hits"],
+            "hit_rate_pct": hit_rate,
+            "avg_pred_prob": avg_pred,
+        }
+
+    return {"ok": True, "n": len(resolved), "regions": result}
 
 
 # ── データ取得・集計 ────────────────────────────────────────────
@@ -352,7 +550,8 @@ def compute_anomaly(activity: dict[str, dict], baseline: dict[str, dict]) -> dic
 def _build_prompt(anomaly: dict[str, dict],
                   geo: dict | None = None,
                   imf: dict | None = None,
-                  xray: dict | None = None) -> str:
+                  xray: dict | None = None,
+                  iono: dict | None = None) -> str:
     lines = ["【地域別地震活動（過去48時間）】\n"]
     for region, data in anomaly.items():
         level = data["anomaly_level"]
@@ -380,6 +579,10 @@ def _build_prompt(anomaly: dict[str, dict],
         em_lines.append(
             f"  太陽X線フラックス: 最大={xray['flux_max_1h']:.2e} "
             f"(フレアクラス:{xray['flare_class']}) [{xray['level']}]"
+        )
+    if iono and iono.get("ok"):
+        em_lines.append(
+            f"  電離層擾乱(NOAAスケール): R={iono['R']} S={iono['S']} G={iono['G']} [{iono['level']}]"
         )
     if em_lines:
         lines.append("\n【電磁気・宇宙天気（参考情報）】")
@@ -457,15 +660,18 @@ def run_precursor_monitor(members: list[dict] | None = None) -> dict:
 
     # 電磁気・宇宙天気データ取得
     print("[precursor] 電磁気・宇宙天気データ取得中...", flush=True)
-    geo_data  = fetch_geomagnetic()
-    imf_data  = fetch_imf()
-    xray_data = fetch_xray()
+    geo_data   = fetch_geomagnetic()
+    imf_data   = fetch_imf()
+    xray_data  = fetch_xray()
+    iono_data  = fetch_ionosphere_r()
     if geo_data.get("ok"):
         print(f"[precursor] 地磁気Kp: avg={geo_data['kp_avg_3h']} max={geo_data['kp_max_3h']} [{geo_data['level']}]", flush=True)
     if imf_data.get("ok"):
         print(f"[precursor] IMF Bz: avg={imf_data['bz_gsm_avg_1h']}nT min={imf_data['bz_gsm_min_1h']}nT [{imf_data['level']}]", flush=True)
     if xray_data.get("ok"):
         print(f"[precursor] X線フラックス: {xray_data['flare_class']}クラス [{xray_data['level']}]", flush=True)
+    if iono_data.get("ok"):
+        print(f"[precursor] 電離層Rスケール: R={iono_data['R']} S={iono_data['S']} G={iono_data['G']} [{iono_data['level']}]", flush=True)
 
     # HIGH/MEDIUM の地域をログ表示
     alert_regions = [r for r, d in anomaly.items() if d["anomaly_level"] in ("HIGH", "MEDIUM")]
@@ -474,7 +680,7 @@ def run_precursor_monitor(members: list[dict] | None = None) -> dict:
     else:
         print("[precursor] 全地域で活動は平常レベル", flush=True)
 
-    prompt = _build_prompt(anomaly, geo=geo_data, imf=imf_data, xray=xray_data)
+    prompt = _build_prompt(anomaly, geo=geo_data, imf=imf_data, xray=xray_data, iono=iono_data)
     print("[precursor] LA予測開始...", flush=True)
 
     _heavy = [m for m in members if m["model"] in {"deepseek-r1:32b", "deepseek-r1:70b"}]
@@ -505,6 +711,7 @@ def run_precursor_monitor(members: list[dict] | None = None) -> dict:
         "geomagnetic":  geo_data,
         "imf":          imf_data,
         "xray":         xray_data,
+        "ionosphere":   iono_data,
         "member_results": member_results,
         "aggregated_probs": aggregated,
         "resolved": None,
@@ -537,6 +744,7 @@ def format_summary(result: dict) -> str:
     geo  = entry.get("geomagnetic", {})
     imf  = entry.get("imf", {})
     xray = entry.get("xray", {})
+    iono = entry.get("ionosphere", {})
     em_parts = []
     if geo.get("ok"):
         em_parts.append(f"地磁気Kp={geo['kp_max_3h']}({geo['level']})")
@@ -544,6 +752,8 @@ def format_summary(result: dict) -> str:
         em_parts.append(f"IMF Bz={imf['bz_gsm_min_1h']}nT({imf['level']})")
     if xray.get("ok"):
         em_parts.append(f"太陽X線={xray['flare_class']}クラス({xray['level']})")
+    if iono.get("ok"):
+        em_parts.append(f"電離層R={iono['R']}({iono['level']})")
     if em_parts:
         lines.append("🌐 " + " / ".join(em_parts))
 

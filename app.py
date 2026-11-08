@@ -719,11 +719,23 @@ try:
             _tb.print_exc()
             return {"ok": False, "error": str(_e)}
 
+    @app.get("/api/keiba/stats")
+    def keiba_stats_endpoint(days: int = 90):
+        """競馬予想の的中率・村人別成績を返す。"""
+        import importlib
+        import keiba as _keiba
+        importlib.reload(_keiba)
+        try:
+            return _keiba.stats(days=days)
+        except Exception as _e:
+            return {"ok": False, "error": str(_e)}
+
     print("[PATCH] /keiba (競馬予想) を配線しました")
     print("[PATCH] /keiba/ledger (競馬台帳) を配線しました")
     print("[PATCH] /keiba/resolve (結果記録) を配線しました")
     print("[PATCH] /api/keiba/run_all (全レース一括予想) を配線しました")
     print("[PATCH] /api/keiba/resolve_past (過去レース自動照合) を配線しました")
+    print("[PATCH] /api/keiba/stats (的中率統計) を配線しました")
 except Exception as e:
     import traceback
     print(f"[PATCH keiba FAILED] {e}")
@@ -843,9 +855,51 @@ try:
             _tb.print_exc()
             return {"ok": False, "error": str(_e)}
 
+    @app.post("/api/jishin/precursor/resolve_past")
+    def precursor_resolve_past(body: dict = {}):
+        """前震モニタリング台帳のresolved=nullをUSGS APIで自動照合する。"""
+        import importlib
+        import jishin_precursor as _p
+        importlib.reload(_p)
+        days_back = (body or {}).get("days_back", 7)
+        try:
+            return _p.resolve_precursor_past(days_back=days_back)
+        except Exception as _e:
+            import traceback as _tb
+            _tb.print_exc()
+            return {"ok": False, "error": str(_e)}
+
+    @app.get("/api/jishin/precursor/stats")
+    def precursor_stats_endpoint(days: int = 30):
+        """前震モニタリングの予測精度統計を返す。"""
+        import importlib
+        import jishin_precursor as _p
+        importlib.reload(_p)
+        try:
+            return _p.precursor_stats(days=days)
+        except Exception as _e:
+            return {"ok": False, "error": str(_e)}
+
+    @app.get("/api/jishin/precursor/ledger")
+    def precursor_ledger():
+        """前震モニタリング台帳を返す（新しい順50件）。"""
+        import importlib, pathlib, json as _json
+        import jishin_precursor as _p
+        importlib.reload(_p)
+        path = pathlib.Path(_p.LEDGER_PATH)
+        if not path.exists():
+            return {"ok": True, "entries": []}
+        lines = [l for l in path.read_text(encoding="utf-8").splitlines() if l.strip()]
+        entries = [_json.loads(l) for l in lines]
+        entries.reverse()
+        return {"ok": True, "entries": entries[:50]}
+
     print("[PATCH] /jishin/precursor (前兆モニター) を配線しました")
     print("[PATCH] /jishin/geonet (電子基準点) を配線しました")
     print("[PATCH] /api/jishin/resolve_past (過去予測自動照合) を配線しました")
+    print("[PATCH] /api/jishin/precursor/resolve_past (前震resolved照合) を配線しました")
+    print("[PATCH] /api/jishin/precursor/stats (前震統計) を配線しました")
+    print("[PATCH] /api/jishin/precursor/ledger (前震台帳) を配線しました")
 except Exception as e:
     import traceback
     print(f"[PATCH jishin FAILED] {e}")
@@ -1026,6 +1080,18 @@ try:
         except Exception as e:
             print(f"[scheduler] 前震モニタリングジョブ エラー: {e}")
 
+    def _precursor_resolve_job():
+        """毎朝6:30: 前震モニタリング台帳のresolved=nullをUSGS APIで自動照合。"""
+        import importlib
+        try:
+            import jishin_precursor as _p
+            importlib.reload(_p)
+            print("[scheduler] 前震resolved照合開始")
+            result = _p.resolve_precursor_past(days_back=7)
+            print(f"[scheduler] 前震resolved照合完了: 解決={result.get('n_resolved')} 未確定={result.get('n_missing')}")
+        except Exception as e:
+            print(f"[scheduler] 前震resolved照合ジョブ エラー: {e}")
+
     def _election_grade_job():
         """
         毎日深夜1時: 選挙予想の自動採点。
@@ -1075,12 +1141,14 @@ try:
     # 地震: 毎朝6時予測 / 毎夜22時答え合わせ
     _scheduler.add_job(_precursor_monitor_job,"cron", hour=5,  minute=0,
                        id="precursor_monitor", replace_existing=True)
+    _scheduler.add_job(_precursor_resolve_job,"cron", hour=6, minute=30,
+                       id="precursor_resolve", replace_existing=True)
     _scheduler.add_job(_jishin_morning_job,  "cron", hour=6,  minute=0,
                        id="jishin_morning",  replace_existing=True)
     _scheduler.add_job(_jishin_resolve_job,  "cron", hour=22, minute=0,
                        id="jishin_resolve",  replace_existing=True)
-    # 競馬: 土日月 朝8時予想 / 夜19時答え合わせ
-    _scheduler.add_job(_keiba_predict_job,   "cron", day_of_week="5,6,0", hour=8,  minute=0,
+    # 競馬: 土日月 10時予想 / 夜19時答え合わせ（8時だとデータ未揃いのためスキップ多発）
+    _scheduler.add_job(_keiba_predict_job,   "cron", day_of_week="5,6,0", hour=10, minute=0,
                        id="keiba_predict",   replace_existing=True)
     _scheduler.add_job(_keiba_resolve_job,   "cron", day_of_week="5,6,0", hour=19, minute=0,
                        id="keiba_resolve",   replace_existing=True)
